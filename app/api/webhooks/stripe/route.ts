@@ -68,32 +68,23 @@ export async function POST(request: NextRequest) {
         // });
 
         // Llamar a la API interna para crear el evento
-        const webhookSecret = process.env.WEBHOOK_SECRET || "internal-webhook-secret";
-        const calendarResponse = await fetch(
-          `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/calendar/create-event`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${webhookSecret}`,
-            },
-            body: JSON.stringify({
-              booking: {
-                // booking data
-                paymentStatus: "completed",
-                paymentId: paymentIntent.id,
-              },
-              vessel: {
-                // vessel data
-              },
-              customerEmail: paymentIntent.receipt_email || "",
-            },
-          })
-        );
-
-        if (!calendarResponse.ok) {
-          console.error("Error creando evento en Google Calendar");
-        }
+        // NOTA: Descomenta y completa cuando tengas la base de datos configurada
+        // const webhookSecret = process.env.WEBHOOK_SECRET || "internal-webhook-secret";
+        // const calendarResponse = await fetch(
+        //   `${process.env.NEXTAUTH_URL || "http://localhost:3000"}/api/calendar/create-event`,
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       Authorization: `Bearer ${webhookSecret}`,
+        //     },
+        //     body: JSON.stringify({
+        //       booking: bookingData,
+        //       vessel: vesselData,
+        //       customerEmail: paymentIntent.receipt_email || "",
+        //     },
+        //   })
+        // );
 
         return NextResponse.json({ received: true });
       } catch (error) {
