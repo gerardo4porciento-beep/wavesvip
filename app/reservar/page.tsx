@@ -140,7 +140,7 @@ export default function BookingPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white text-luxury-light pt-24 pb-12 px-4">
+      <main className="min-h-screen bg-white text-luxury-light pt-16 pb-12 px-4">
         <div className="container mx-auto max-w-6xl">
           {/* Breadcrumb */}
           <Link

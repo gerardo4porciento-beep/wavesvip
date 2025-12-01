@@ -28,13 +28,13 @@ export default function Header() {
           : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-4 lg:px-8 py-4">
+      <nav className="container mx-auto px-4 lg:px-8 py-2">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Logo width={120} height={40} />
+          <Logo width={100} height={32} />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/#embarcaciones"
               className="text-luxury-light/80 hover:text-luxury-gold transition-colors"
@@ -62,6 +62,7 @@ export default function Header() {
             <Link href="/reservar">
               <Button
                 variant="outline"
+                size="sm"
                 className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-luxury-dark"
               >
                 Reservar
