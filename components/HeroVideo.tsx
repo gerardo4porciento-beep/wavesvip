@@ -92,11 +92,20 @@ export default function HeroVideo({
     video.addEventListener("waiting", handleWaiting);
     video.addEventListener("playing", handlePlaying);
 
-    // Configuración optimizada para performance
-    video.preload = "metadata"; // Cargar solo metadata inicialmente
+    // Configuración optimizada para performance y Safari iOS
+    video.preload = "auto"; // Cambiado a "auto" para Safari iOS
     video.playsInline = true;
-    video.muted = isMuted;
+    video.muted = true; // Siempre muted para Safari iOS (requerido para autoplay)
     video.loop = true;
+    video.setAttribute("webkit-playsinline", "true");
+    video.setAttribute("playsinline", "true");
+    
+    // Detectar iOS y forzar muted
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      video.muted = true;
+      setIsMuted(true);
+    }
 
     return () => {
       video.removeEventListener("loadeddata", handleLoadedData);
@@ -198,9 +207,30 @@ export default function HeroVideo({
         className="video-container"
         poster={posterUrl}
         playsInline
+        webkit-playsinline="true"
+        x5-playsinline="true"
         loop
-        muted={isMuted}
-        preload="metadata"
+        muted
+        preload="auto"
+        autoPlay
+        onLoadedMetadata={(e) => {
+          const video = e.currentTarget;
+          // Safari iOS requiere muted para autoplay
+          video.muted = true;
+          video.play().catch(() => {
+            // Ignorar errores de autoplay
+          });
+        }}
+        onCanPlay={(e) => {
+          const video = e.currentTarget;
+          // Asegurar que está muted para Safari iOS
+          if (!video.muted) {
+            video.muted = true;
+          }
+          video.play().catch(() => {
+            // Ignorar errores de autoplay
+          });
+        }}
         aria-label="Video de embarcación de lujo"
       >
         {currentSource && (

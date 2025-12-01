@@ -44,10 +44,10 @@ export default function GallerySection() {
 
   return (
     <>
-      <section
-        id="galeria"
-        className="py-24 px-4 bg-luxury-dark text-luxury-light"
-      >
+    <section
+      id="galeria"
+      className="py-24 px-4 bg-white text-luxury-light"
+    >
         <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ export default function GallerySection() {
                   alt={image.alt}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-luxury-dark/0 group-hover:bg-luxury-dark/30 transition-colors" />
+                <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors" />
               </motion.div>
             ))}
           </div>
@@ -95,7 +95,7 @@ export default function GallerySection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-luxury-dark/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
@@ -107,7 +107,7 @@ export default function GallerySection() {
             >
               <button
                 onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 bg-luxury-dark/80 rounded-full flex items-center justify-center text-white hover:bg-luxury-gold transition-colors"
+                className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 border border-gray-200 rounded-full flex items-center justify-center text-luxury-light hover:bg-luxury-gold hover:text-white transition-colors"
               >
                 <X size={24} />
               </button>

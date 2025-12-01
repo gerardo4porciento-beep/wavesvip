@@ -38,7 +38,7 @@ export default function HomePage() {
               showControls={true}
             />
           ) : (
-            <div className="relative h-screen w-full bg-gradient-to-b from-luxury-dark via-luxury-dark-secondary to-luxury-dark flex items-center justify-center overflow-hidden">
+            <div className="relative h-screen w-full bg-gradient-to-b from-white via-luxury-dark-secondary to-white flex items-center justify-center overflow-hidden">
               {/* Efecto de olas sutiles */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-luxury-gold/20 to-transparent" />
@@ -52,10 +52,10 @@ export default function HomePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
                 >
-                  <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-white mb-6 text-balance">
+                  <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-luxury-light mb-6 text-balance">
                     Waves VIP
                   </h1>
-                  <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-12 text-balance">
+                  <p className="text-xl md:text-2xl lg:text-3xl text-luxury-light/80 mb-12 text-balance">
                     Experiencia de lujo en el paraíso de Morrocoy
                   </p>
                 </motion.div>
@@ -75,11 +75,11 @@ export default function HomePage() {
               </div>
 
               {/* Scroll Indicator */}
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
-                <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-                  <div className="w-1 h-3 bg-white/50 rounded-full" />
-                </div>
-              </div>
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
+            <div className="w-6 h-10 border-2 border-luxury-light/50 rounded-full flex items-start justify-center p-2">
+              <div className="w-1 h-3 bg-luxury-light/50 rounded-full" />
+            </div>
+          </div>
             </div>
           )}
 
@@ -100,11 +100,11 @@ export default function HomePage() {
 
           {/* Scroll Indicator (si hay video) */}
           {heroVideoUrl && !heroVideoUrl.includes("your-cloud-name") && (
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
-              <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-                <div className="w-1 h-3 bg-white/50 rounded-full" />
-              </div>
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
+            <div className="w-6 h-10 border-2 border-luxury-light/50 rounded-full flex items-start justify-center p-2">
+              <div className="w-1 h-3 bg-luxury-light/50 rounded-full" />
             </div>
+          </div>
           )}
         </section>
 

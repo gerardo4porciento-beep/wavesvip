@@ -9,7 +9,7 @@ export default function ContactSection() {
   return (
     <section
       id="contacto"
-      className="py-24 px-4 bg-luxury-dark-secondary text-luxury-light"
+      className="py-24 px-4 bg-white text-luxury-light"
     >
       <div className="container mx-auto max-w-6xl">
         <motion.div
@@ -108,7 +108,7 @@ export default function ContactSection() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-4 py-3 bg-luxury-dark border border-luxury-light/20 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-gold transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-gold transition-colors"
                   placeholder="Juan Pérez"
                 />
               </div>
@@ -124,7 +124,7 @@ export default function ContactSection() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-4 py-3 bg-luxury-dark border border-luxury-light/20 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-gold transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-gold transition-colors"
                   placeholder="juan@example.com"
                 />
               </div>

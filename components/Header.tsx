@@ -24,7 +24,7 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-luxury-dark/95 backdrop-blur-md shadow-lg"
+          ? "bg-white/95 backdrop-blur-md shadow-lg"
           : "bg-transparent"
       }`}
     >
@@ -37,25 +37,25 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/#embarcaciones"
-              className="text-white/80 hover:text-luxury-gold transition-colors"
+              className="text-luxury-light/80 hover:text-luxury-gold transition-colors"
             >
               Embarcaciones
             </Link>
             <Link
               href="/#experiencia"
-              className="text-white/80 hover:text-luxury-gold transition-colors"
+              className="text-luxury-light/80 hover:text-luxury-gold transition-colors"
             >
               Experiencia
             </Link>
             <Link
               href="/#galeria"
-              className="text-white/80 hover:text-luxury-gold transition-colors"
+              className="text-luxury-light/80 hover:text-luxury-gold transition-colors"
             >
               Galería
             </Link>
             <Link
               href="/#contacto"
-              className="text-white/80 hover:text-luxury-gold transition-colors"
+              className="text-luxury-light/80 hover:text-luxury-gold transition-colors"
             >
               Contacto
             </Link>
@@ -71,7 +71,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white"
+            className="md:hidden text-luxury-light"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -90,28 +90,28 @@ export default function Header() {
             >
               <Link
                 href="/#embarcaciones"
-                className="block text-white/80 hover:text-luxury-gold transition-colors"
+                className="block text-luxury-light/80 hover:text-luxury-gold transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Embarcaciones
               </Link>
               <Link
                 href="/#experiencia"
-                className="block text-white/80 hover:text-luxury-gold transition-colors"
+                className="block text-luxury-light/80 hover:text-luxury-gold transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Experiencia
               </Link>
               <Link
                 href="/#galeria"
-                className="block text-white/80 hover:text-luxury-gold transition-colors"
+                className="block text-luxury-light/80 hover:text-luxury-gold transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Galería
               </Link>
               <Link
                 href="/#contacto"
-                className="block text-white/80 hover:text-luxury-gold transition-colors"
+                className="block text-luxury-light/80 hover:text-luxury-gold transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contacto

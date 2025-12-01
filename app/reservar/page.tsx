@@ -140,7 +140,7 @@ export default function BookingPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-luxury-dark text-luxury-light pt-24 pb-12 px-4">
+      <main className="min-h-screen bg-white text-luxury-light pt-24 pb-12 px-4">
         <div className="container mx-auto max-w-6xl">
           {/* Breadcrumb */}
           <Link
@@ -172,7 +172,7 @@ export default function BookingPage() {
                           ? "bg-luxury-gold text-luxury-dark"
                           : isCurrent
                           ? "bg-luxury-gold/50 text-white border-2 border-luxury-gold"
-                          : "bg-luxury-dark-secondary text-luxury-light/30"
+                          : "bg-gray-100 text-luxury-light/30"
                       }`}
                     >
                       {isCompleted ? (
@@ -192,7 +192,7 @@ export default function BookingPage() {
                   {index < 3 && (
                     <div
                       className={`h-1 w-8 md:w-16 mx-2 transition-colors ${
-                        isCompleted ? "bg-luxury-gold" : "bg-luxury-dark-secondary"
+                        isCompleted ? "bg-luxury-gold" : "bg-gray-200"
                       }`}
                     />
                   )}

@@ -118,8 +118,8 @@ export default function CalendarAvailability({
                 rounded-lg text-sm font-medium transition-all
                 ${
                   isAvailable
-                    ? "bg-luxury-dark-secondary hover:bg-luxury-gold/20 text-luxury-light cursor-pointer hover:scale-105"
-                    : "bg-luxury-dark-secondary/50 text-luxury-light/30 cursor-not-allowed"
+                    ? "bg-white border border-gray-200 hover:bg-luxury-gold/20 text-luxury-light cursor-pointer hover:scale-105"
+                    : "bg-gray-100 border border-gray-200 text-luxury-light/30 cursor-not-allowed"
                 }
               `}
             >

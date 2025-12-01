@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply bg-luxury-dark text-luxury-light antialiased;
+    @apply bg-white text-luxury-light antialiased;
     font-family: var(--font-inter);
   }
 
@@ -35,7 +35,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-luxury-dark;
+    @apply bg-gray-100;
   }
 
   ::-webkit-scrollbar-thumb {

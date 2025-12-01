@@ -7,7 +7,7 @@ export default function AboutSection() {
   return (
     <section
       id="experiencia"
-      className="py-24 px-4 bg-luxury-dark text-luxury-light"
+      className="py-24 px-4 bg-white text-luxury-light"
     >
       <div className="container mx-auto max-w-6xl">
         <motion.div

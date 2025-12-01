@@ -113,7 +113,7 @@ export default function FleetSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-luxury-dark rounded-lg overflow-hidden group hover:shadow-2xl hover:shadow-luxury-gold/20 transition-all duration-300"
+              className="bg-white border border-gray-200 rounded-lg overflow-hidden group hover:shadow-2xl hover:shadow-luxury-gold/20 transition-all duration-300"
             >
               {/* Imagen */}
               <div className="relative h-64 overflow-hidden">

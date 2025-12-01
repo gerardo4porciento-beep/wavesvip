@@ -11,9 +11,9 @@ const config: Config = {
       colors: {
         luxury: {
           gold: "#D4AF37",
-          dark: "#0A0A0A",
-          "dark-secondary": "#1A1A1A",
-          light: "#F5F5F5",
+          dark: "#FFFFFF", // Fondo blanco
+          "dark-secondary": "#F5F5F5", // Fondo secundario claro
+          light: "#0A0A0A", // Texto oscuro
         },
       },
       fontFamily: {
