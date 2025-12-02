@@ -76,10 +76,10 @@ export default function DestinationsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-luxury-gold">
             Destinos
           </h2>
-          <p className="text-xl text-luxury-light/80 max-w-3xl mx-auto">
+          <p className="text-xl text-white/90 max-w-3xl mx-auto">
             Descubre los increíbles cayos y bajos del Parque Nacional Morrocoy, cada uno con su propia magia y belleza única.
           </p>
         </motion.div>

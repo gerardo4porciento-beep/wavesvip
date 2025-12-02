@@ -7,6 +7,7 @@ import DestinationsSection from "@/components/sections/DestinationsSection";
 import GallerySection from "@/components/sections/GallerySection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
+import ContactMobileSection from "@/components/SocialButtonsMobile";
 
 export default function HomePage() {
   // URLs de video optimizadas (Cloudinary o Mux)
@@ -48,11 +49,22 @@ export default function HomePage() {
         {/* Secciones adicionales - Orden: Destinos, Experiencia, Galería, Contacto */}
         <DestinationsSection />
         <AboutSection />
-        <GallerySection />
-        <ContactSection />
+        {/* Ocultar en móvil */}
+        <div className="hidden md:block">
+          <GallerySection />
+        </div>
+        <div className="hidden md:block">
+          <ContactSection />
+        </div>
+
+        {/* Sección de contacto móvil - Solo visible en móvil */}
+        <ContactMobileSection />
       </main>
 
-      <Footer />
+      {/* Footer - Solo visible en desktop */}
+      <div className="hidden md:block">
+        <Footer />
+      </div>
     </>
   );
 }

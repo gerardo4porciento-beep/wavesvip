@@ -26,6 +26,11 @@ export const metadata: Metadata = {
     "embarcaciones deportivas",
     "experiencia VIP",
   ],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Waves VIP | Embarcaciones de Lujo en Morrocoy",
     description:
