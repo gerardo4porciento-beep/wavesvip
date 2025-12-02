@@ -347,11 +347,8 @@ export default function HeroVideo({
               fontStretch: 'condensed'
             }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white uppercase tracking-tight text-center">
-              TRUE
-            </h1>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white uppercase tracking-tight text-center">
-              VIBES
+            <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white uppercase tracking-tight text-center">
+              VIVE LA EXPERIENCIA
             </h1>
           </motion.div>
         </div>
