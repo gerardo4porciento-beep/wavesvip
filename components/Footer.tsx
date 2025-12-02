@@ -20,7 +20,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://instagram.com/wavesvip"
+                href="https://instagram.com/wavesvip.ve"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-luxury-light/70 hover:text-luxury-gold hover:bg-luxury-gold/20 transition-colors"
@@ -109,10 +109,10 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="tel:+584123456789"
+                  href="tel:+584127316397"
                   className="hover:text-luxury-gold transition-colors"
                 >
-                  +58 412 345 6789
+                  +58 412 731 6397
                 </a>
               </li>
               <li className="text-sm">

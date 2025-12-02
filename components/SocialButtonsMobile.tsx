@@ -40,7 +40,7 @@ export default function ContactMobileSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Link
-              href="https://wa.me/584123456789"
+              href="https://wa.me/584127316397"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-4 w-full bg-[#25D366] rounded-2xl p-5 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
@@ -66,7 +66,7 @@ export default function ContactMobileSection() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <Link
-              href="https://www.instagram.com/wavesvip"
+              href="https://www.instagram.com/wavesvip.ve"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-4 w-full bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 rounded-2xl p-5 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"

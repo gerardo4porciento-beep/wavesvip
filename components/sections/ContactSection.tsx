@@ -64,10 +64,10 @@ export default function ContactSection() {
                   <div>
                     <p className="font-semibold mb-1">Teléfono</p>
                     <a
-                      href="tel:+584123456789"
+                      href="tel:+584127316397"
                       className="text-luxury-light/70 hover:text-luxury-gold transition-colors"
                     >
-                      +58 412 345 6789
+                      +58 412 731 6397
                     </a>
                   </div>
                 </div>
