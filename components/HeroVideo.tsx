@@ -263,7 +263,6 @@ export default function HeroVideo({
     <div 
       className={cn("relative w-full overflow-hidden bg-black", className)}
       style={{
-        height: '100vh',
         height: '100dvh',
         minHeight: '-webkit-fill-available',
       }}
