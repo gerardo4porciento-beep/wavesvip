@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const TYPEWRITER_PHRASES = [
   "ALQUILER DE EMBARCACION PARA 8 PERSONAS",
-  "YATE DE LUJO EN MORROCOY",
+  "LANCHAS DEPORTIVAS EN TUCACAS",
   "RESERVA PARA FIN DE SEMANA",
   "EXCURSION AL CAYO SOMBRERO"
 ];
@@ -308,8 +308,6 @@ export default function HeroVideo({
         Tu navegador no soporta videos HTML5.
       </video>
 
-      {/* Overlay oscuro para mejor legibilidad */}
-      <div className="absolute inset-0 bg-gradient-to-b from-luxury-dark/20 via-transparent to-luxury-dark/60" />
 
       {/* Loading Spinner */}
       {isLoading && (
