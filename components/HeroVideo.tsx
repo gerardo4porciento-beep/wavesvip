@@ -7,6 +7,11 @@ import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+const TYPEWRITER_PHRASES = [
+  "navega el parque nacional morrocoy con nosotros",
+  "reserva ya tu fecha"
+];
+
 interface HeroVideoProps {
   videoUrl: string;
   posterUrl?: string;
@@ -34,6 +39,20 @@ export default function HeroVideo({
   const [isSearchMenuOpen, setIsSearchMenuOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentSource, setCurrentSource] = useState<string | null>(null);
+  const [videoKey, setVideoKey] = useState(0); // Key para forzar recarga del video
+  
+  // Typewriter effect para la barra de búsqueda
+  const [typewriterText, setTypewriterText] = useState("");
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+
+  // Agregar cache-busting a la URL del video
+  const addCacheBuster = (url: string): string => {
+    if (!url) return url;
+    // Si ya tiene parámetros, agregar &, si no, agregar ?
+    const separator = url.includes('?') ? '&' : '?';
+    // Usar timestamp para forzar recarga
+    return `${url}${separator}t=${Date.now()}`;
+  };
 
   // Detectar soporte de formatos y seleccionar el mejor
   useEffect(() => {
@@ -45,13 +64,25 @@ export default function HeroVideo({
       const webmSupported = video.canPlayType('video/webm; codecs="vp9"') !== "";
       const mp4Supported = video.canPlayType('video/mp4; codecs="avc1.42E01E"') !== "";
 
+      let sourceUrl = videoUrl;
+      
       if (webmSupported && videoUrl.includes(".webm")) {
-        setCurrentSource(videoUrl.replace(".mp4", ".webm"));
+        sourceUrl = videoUrl.replace(".mp4", ".webm");
       } else if (mp4Supported) {
-        setCurrentSource(videoUrl.replace(".webm", ".mp4"));
-      } else {
-        setCurrentSource(videoUrl);
+        sourceUrl = videoUrl.replace(".webm", ".mp4");
       }
+
+      // Agregar cache-busting solo si la URL no es de Cloudinary con versión
+      // (Cloudinary ya maneja versiones con /v1/, /v2/, etc.)
+      if (!sourceUrl.match(/\/v\d+\//)) {
+        sourceUrl = addCacheBuster(sourceUrl);
+      }
+
+      setCurrentSource(sourceUrl);
+      // Forzar recarga cambiando la key del video
+      setVideoKey(prev => prev + 1);
+      setIsVideoLoaded(false);
+      setIsLoading(true);
     };
 
     checkSupport();
@@ -119,6 +150,29 @@ export default function HeroVideo({
     };
   }, [currentSource, isMuted, isPlaying]);
 
+  // Forzar recarga del video cuando cambia la URL
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !currentSource) return;
+
+    // Limpiar y recargar el video cuando cambia la fuente
+    video.load();
+    setIsVideoLoaded(false);
+    setIsLoading(true);
+
+    // Esperar a que el video se cargue
+    const handleCanPlay = () => {
+      setIsVideoLoaded(true);
+      setIsLoading(false);
+    };
+
+    video.addEventListener('canplay', handleCanPlay, { once: true });
+
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+    };
+  }, [currentSource, videoKey]);
+
   // Intersection Observer para lazy loading real
   useEffect(() => {
     const video = videoRef.current;
@@ -146,6 +200,49 @@ export default function HeroVideo({
     };
   }, [currentSource, isVideoLoaded]);
 
+  // Efecto typewriter para la barra de búsqueda
+  useEffect(() => {
+    if (isLoading || isSearchMenuOpen) {
+      setTypewriterText("");
+      return;
+    }
+
+    const currentPhrase = TYPEWRITER_PHRASES[currentPhraseIndex];
+    let charIndex = 0;
+    let isDeleting = false;
+    let timeout: NodeJS.Timeout | null = null;
+
+    const type = () => {
+      if (!isDeleting && charIndex < currentPhrase.length) {
+        // Escribiendo
+        setTypewriterText(currentPhrase.slice(0, charIndex + 1));
+        charIndex++;
+        timeout = setTimeout(type, 100); // Velocidad de escritura
+      } else if (!isDeleting && charIndex === currentPhrase.length) {
+        // Esperar antes de borrar
+        isDeleting = true;
+        timeout = setTimeout(type, 3000); // Esperar 3 segundos con el texto completo
+      } else if (isDeleting && charIndex > 0) {
+        // Borrando
+        setTypewriterText(currentPhrase.slice(0, charIndex - 1));
+        charIndex--;
+        timeout = setTimeout(type, 50); // Velocidad de borrado (más rápida)
+      } else if (isDeleting && charIndex === 0) {
+        // Cambiar a la siguiente frase
+        setTypewriterText("");
+        setCurrentPhraseIndex((prev) => (prev + 1) % TYPEWRITER_PHRASES.length);
+        isDeleting = false;
+        timeout = setTimeout(type, 500); // Esperar antes de empezar la siguiente frase
+      }
+    };
+
+    type();
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [currentPhraseIndex, isLoading, isSearchMenuOpen]);
+
 
   if (hasError && fallbackImage) {
     return (
@@ -165,6 +262,7 @@ export default function HeroVideo({
     <div className={cn("relative w-full h-screen overflow-hidden", className)}>
       {/* Video Element */}
       <video
+        key={videoKey}
         ref={videoRef}
         className="video-container"
         poster={posterUrl}
@@ -198,11 +296,11 @@ export default function HeroVideo({
         {currentSource && (
           <>
             {/* Preferir WebM para mejor compresión */}
-            <source src={currentSource.replace(".mp4", ".webm")} type="video/webm" />
+            <source key={`webm-${videoKey}`} src={currentSource.replace(".mp4", ".webm")} type="video/webm" />
             {/* Fallback a MP4 */}
-            <source src={currentSource.replace(".webm", ".mp4")} type="video/mp4" />
+            <source key={`mp4-${videoKey}`} src={currentSource.replace(".webm", ".mp4")} type="video/mp4" />
             {/* Fallback final */}
-            <source src={currentSource} type="video/mp4" />
+            <source key={`final-${videoKey}`} src={currentSource} type="video/mp4" />
           </>
         )}
         Tu navegador no soporta videos HTML5.
@@ -254,22 +352,31 @@ export default function HeroVideo({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="group w-full max-w-4xl flex items-center gap-0 bg-white/98 backdrop-blur-sm border-4 border-luxury-gold rounded-full p-1 shadow-2xl hover:bg-luxury-gold transition-colors duration-300 cursor-pointer"
+            className="group w-full max-w-4xl flex items-center gap-0 bg-transparent border-4 border-luxury-gold rounded-full p-1 shadow-2xl transition-colors duration-300 cursor-pointer"
             onClick={() => setIsSearchMenuOpen(true)}
           >
-            <Search className="w-6 h-6 text-gray-400 ml-2 group-hover:text-luxury-dark transition-colors duration-300" />
-            <Input
-              type="text"
-              placeholder="Search..."
-              className="flex-1 border-0 focus:ring-0 bg-transparent text-luxury-light text-lg placeholder:text-gray-400 group-hover:placeholder:text-luxury-dark group-hover:text-luxury-dark transition-colors duration-300 cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsSearchMenuOpen(true);
-              }}
-              readOnly
-            />
+            <Search className="w-6 h-6 text-luxury-gold ml-2 transition-colors duration-300" />
+            <div className="flex-1 relative">
+              <Input
+                type="text"
+                value=""
+                placeholder=""
+                className="flex-1 border-0 focus:ring-0 bg-transparent text-white text-lg transition-colors duration-300 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsSearchMenuOpen(true);
+                }}
+                readOnly
+              />
+              <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden">
+                <span className="text-white/70 text-lg ml-3 truncate">
+                  {typewriterText}
+                  <span className="animate-pulse">|</span>
+                </span>
+              </div>
+            </div>
             <Button 
-              className="hidden md:flex bg-luxury-gold text-luxury-dark border-2 border-luxury-gold hover:bg-black hover:text-white hover:border-black uppercase font-bold px-8 py-3 text-base rounded-full transition-colors duration-300"
+              className="hidden md:flex bg-luxury-gold text-luxury-dark border-2 border-luxury-gold hover:bg-luxury-gold/90 uppercase font-bold px-8 py-3 text-base rounded-full transition-colors duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsSearchMenuOpen(true);
