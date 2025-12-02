@@ -8,7 +8,7 @@ export default function ContactMobileSection() {
   return (
     <section
       id="contacto-mobile"
-      className="md:hidden pt-8 pb-20 px-4 bg-luxury-gold text-luxury-dark relative overflow-hidden"
+      className="md:hidden pt-8 pb-8 px-4 bg-luxury-gold text-luxury-dark relative overflow-hidden"
     >
       <div className="container mx-auto max-w-2xl relative z-10">
         <motion.div
