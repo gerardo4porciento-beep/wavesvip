@@ -15,7 +15,7 @@ export default function Logo({
   width = 100,
   height = 32,
   href = "/",
-  showText = true,
+  showText = false,
 }: LogoProps) {
   const logoContent = (
     <div className={cn("flex items-center gap-3", className)}>

@@ -8,8 +8,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const TYPEWRITER_PHRASES = [
-  "navega el parque nacional morrocoy con nosotros",
-  "reserva ya tu fecha"
+  "ALQUILER DE EMBARCACION PARA 8 PERSONAS",
+  "YATE DE LUJO EN MORROCOY",
+  "RESERVA PARA FIN DE SEMANA",
+  "EXCURSION AL CAYO SOMBRERO"
 ];
 
 interface HeroVideoProps {
@@ -369,7 +371,7 @@ export default function HeroVideo({
                 readOnly
               />
               <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden">
-                <span className="text-white/70 text-lg ml-3 truncate">
+                <span className="text-white/90 text-lg ml-3 truncate font-bold uppercase">
                   {typewriterText}
                   <span className="animate-pulse">|</span>
                 </span>

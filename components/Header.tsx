@@ -15,7 +15,7 @@ export default function Header() {
       <nav className="container mx-auto px-6 lg:px-12 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Logo width={100} height={32} showText={true} />
+          <Logo width={100} height={32} showText={false} />
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
@@ -59,11 +59,11 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden text-white"
+            className="lg:hidden text-luxury-gold"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
           </button>
         </div>
 
