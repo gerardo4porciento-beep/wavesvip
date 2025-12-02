@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle, Instagram } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "@/components/Logo";
 
@@ -47,6 +47,24 @@ export default function Header() {
             >
               Contacto
             </Link>
+            <a
+              href="https://wa.me/584127316397"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-luxury-gold transition-colors"
+              aria-label="WhatsApp"
+            >
+              <MessageCircle size={20} />
+            </a>
+            <a
+              href="https://www.instagram.com/wavesvip.ve"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-luxury-gold transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram size={20} />
+            </a>
             <Link href="/reservar">
               <Button
                 className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark font-semibold uppercase text-sm px-6 py-2 tracking-wide border-0"
@@ -108,6 +126,28 @@ export default function Header() {
               >
                 Contacto
               </Link>
+              <div className="flex items-center gap-4 pt-2">
+                <a
+                  href="https://wa.me/584127316397"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-luxury-gold transition-colors"
+                  aria-label="WhatsApp"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <MessageCircle size={24} />
+                </a>
+                <a
+                  href="https://www.instagram.com/wavesvip.ve"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-luxury-gold transition-colors"
+                  aria-label="Instagram"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Instagram size={24} />
+                </a>
+              </div>
               <Link href="/reservar" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button
                   className="w-full bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark font-semibold uppercase text-sm py-2 tracking-wide"
