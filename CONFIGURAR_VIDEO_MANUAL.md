@@ -15,7 +15,7 @@ Abre `.env.local` en un editor de texto y pega esto:
 ```env
 # Cloudinary Video Optimizado
 # URL con transformaciones para optimizar el video de 67MB a ~8-15MB
-NEXT_PUBLIC_HERO_VIDEO_URL=https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_auto:best,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
+NEXT_PUBLIC_HERO_VIDEO_URL=https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_90,dpr_auto,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
 
 # Cloudinary Config
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=do7eqgtjs
@@ -56,7 +56,8 @@ Si prefieres, puedes ejecutar el script PowerShell que creé:
 La URL incluye estas transformaciones de optimización:
 
 - **`f_auto`** → Formato automático (WebM o MP4 según navegador)
-- **`q_auto:best`** → Calidad optimizada automáticamente
+- **`q_90`** → Calidad alta (90%) para reducir pixelado
+- **`dpr_auto`** → Densidad de píxeles automática para pantallas retina
 - **`w_1920,h_1080`** → Resolución máxima Full HD
 - **`c_fill`** → Recorte inteligente para mantener aspecto
 

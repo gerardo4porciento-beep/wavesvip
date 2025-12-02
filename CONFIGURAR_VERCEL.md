@@ -24,7 +24,7 @@ NEXT_PUBLIC_HERO_VIDEO_URL
 
 **Value (Valor)** - Copia exactamente esto:
 ```
-https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_auto:best,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
+https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_90,dpr_auto,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
 ```
 
 **Environment (Ambiente)** - Marca TODAS las opciones:
@@ -56,7 +56,7 @@ Si quieres, también agrega:
 
 | Variable | Valor |
 |----------|-------|
-| `NEXT_PUBLIC_HERO_VIDEO_URL` | `https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_auto:best,w_1920,h_1080,c_fill/Untitled_design_ho9zxa` |
+| `NEXT_PUBLIC_HERO_VIDEO_URL` | `https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_90,dpr_auto,w_1920,h_1080,c_fill/Untitled_design_ho9zxa` |
 | `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `do7eqgtjs` (opcional) |
 
 ## ✅ Verificar que Funciona
@@ -77,7 +77,7 @@ Si quieres, también agrega:
 
 Abre esta URL directamente en tu navegador:
 ```
-https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_auto:best,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
+https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_90,dpr_auto,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
 ```
 
 Si el video se descarga/reproduce, la URL está bien. Si da error 404, verifica:

@@ -4,7 +4,7 @@
 $envContent = @"
 # Cloudinary Video Optimizado
 # URL con transformaciones para optimizar el video de 67MB a ~8-15MB
-NEXT_PUBLIC_HERO_VIDEO_URL=https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_auto:best,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
+NEXT_PUBLIC_HERO_VIDEO_URL=https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_90,dpr_auto,w_1920,h_1080,c_fill/Untitled_design_ho9zxa
 
 # Cloudinary Config
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=do7eqgtjs
@@ -29,7 +29,7 @@ $envContent | Out-File -FilePath ".env.local" -Encoding UTF8
 Write-Host "✅ Archivo .env.local creado exitosamente!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📹 URL del video optimizado configurada:" -ForegroundColor Cyan
-Write-Host "https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_auto:best,w_1920,h_1080,c_fill/Untitled_design_ho9zxa" -ForegroundColor White
+Write-Host "https://res.cloudinary.com/do7eqgtjs/video/upload/f_auto,q_90,dpr_auto,w_1920,h_1080,c_fill/Untitled_design_ho9zxa" -ForegroundColor White
 Write-Host ""
 Write-Host "🚀 Próximo paso: Reinicia el servidor (Ctrl+C y luego npm run dev)" -ForegroundColor Yellow
 

@@ -27,6 +27,17 @@
   .video-container {
     @apply absolute inset-0 w-full h-full;
     object-fit: cover;
+    /* Mejorar calidad de renderizado y reducir pixelado */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* Forzar renderizado de alta calidad */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* Suavizar escalado */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Smooth scrollbar */
