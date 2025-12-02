@@ -7,7 +7,7 @@ export default function AboutSection() {
   return (
     <section
       id="experiencia"
-      className="py-24 px-4 bg-luxury-dark-secondary text-luxury-light"
+      className="py-24 px-4 bg-[#E0F2F7] text-luxury-light"
     >
       <div className="container mx-auto max-w-6xl">
         <motion.div
@@ -17,10 +17,10 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-luxury-light">
             La Experiencia Waves VIP
           </h2>
-          <p className="text-xl text-luxury-light/80 max-w-3xl mx-auto">
+          <p className="text-xl text-luxury-light/90 max-w-3xl mx-auto">
             Descubre el paraíso de Morrocoy a bordo de nuestras embarcaciones de
             lujo, donde cada detalle está diseñado para brindarte una experiencia
             inolvidable.
@@ -59,10 +59,10 @@ export default function AboutSection() {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-luxury-gold/20 text-luxury-gold mb-6">
                 <feature.icon size={32} />
               </div>
-              <h3 className="text-2xl font-display font-bold mb-4">
+              <h3 className="text-2xl font-display font-bold mb-4 text-luxury-light">
                 {feature.title}
               </h3>
-              <p className="text-luxury-light/70 leading-relaxed">
+              <p className="text-luxury-light/80 leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

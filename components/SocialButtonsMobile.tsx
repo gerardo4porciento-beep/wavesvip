@@ -8,7 +8,7 @@ export default function ContactMobileSection() {
   return (
     <section
       id="contacto-mobile"
-      className="md:hidden py-20 px-4 bg-gradient-to-b from-luxury-dark-secondary via-luxury-dark to-luxury-dark text-luxury-light relative overflow-hidden"
+      className="md:hidden pt-8 pb-20 px-4 bg-gradient-to-b from-luxury-dark-secondary via-luxury-dark to-luxury-dark text-luxury-light relative overflow-hidden"
     >
       {/* Decoración de fondo */}
       <div className="absolute inset-0 opacity-5">

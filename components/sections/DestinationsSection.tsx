@@ -66,7 +66,7 @@ export default function DestinationsSection() {
   return (
     <section
       id="destinos"
-      className="py-24 px-4 bg-luxury-dark-secondary text-luxury-light"
+      className="pt-8 pb-24 px-4 bg-luxury-dark-secondary text-luxury-light"
     >
       <div className="container mx-auto max-w-7xl">
         <motion.div
@@ -79,7 +79,7 @@ export default function DestinationsSection() {
           <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-luxury-gold">
             Destinos
           </h2>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto">
+          <p className="text-xl text-luxury-light/90 max-w-3xl mx-auto">
             Descubre los increíbles cayos y bajos del Parque Nacional Morrocoy, cada uno con su propia magia y belleza única.
           </p>
         </motion.div>
