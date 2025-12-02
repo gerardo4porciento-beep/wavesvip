@@ -9,7 +9,7 @@ export default function ContactSection() {
   return (
     <section
       id="contacto"
-      className="py-24 px-4 bg-white text-luxury-light"
+      className="py-24 px-4 bg-luxury-gold text-luxury-dark"
     >
       <div className="container mx-auto max-w-6xl">
         <motion.div
@@ -19,10 +19,10 @@ export default function ContactSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-luxury-dark">
             Contáctanos
           </h2>
-          <p className="text-xl text-luxury-light/80 max-w-3xl mx-auto">
+          <p className="text-xl text-luxury-dark/90 max-w-3xl mx-auto">
             Estamos aquí para hacer de tu experiencia algo inolvidable. Escríbenos
             y te responderemos a la brevedad.
           </p>
@@ -38,19 +38,19 @@ export default function ContactSection() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-display font-bold mb-6">
+              <h3 className="text-2xl font-display font-bold mb-6 text-luxury-dark">
                 Información de Contacto
               </h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-luxury-gold/20 flex items-center justify-center flex-shrink-0">
-                    <Mail className="text-luxury-gold" size={20} />
+                  <div className="w-12 h-12 rounded-full bg-luxury-dark/20 flex items-center justify-center flex-shrink-0">
+                    <Mail className="text-luxury-dark" size={20} />
                   </div>
                   <div>
-                    <p className="font-semibold mb-1">Email</p>
+                    <p className="font-semibold mb-1 text-luxury-dark">Email</p>
                     <a
                       href="mailto:info@wavesvip.com"
-                      className="text-luxury-light/70 hover:text-luxury-gold transition-colors"
+                      className="text-luxury-dark/80 hover:text-luxury-dark transition-colors"
                     >
                       info@wavesvip.com
                     </a>
@@ -58,14 +58,14 @@ export default function ContactSection() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-luxury-gold/20 flex items-center justify-center flex-shrink-0">
-                    <Phone className="text-luxury-gold" size={20} />
+                  <div className="w-12 h-12 rounded-full bg-luxury-dark/20 flex items-center justify-center flex-shrink-0">
+                    <Phone className="text-luxury-dark" size={20} />
                   </div>
                   <div>
-                    <p className="font-semibold mb-1">Teléfono</p>
+                    <p className="font-semibold mb-1 text-luxury-dark">Teléfono</p>
                     <a
                       href="tel:+584127316397"
-                      className="text-luxury-light/70 hover:text-luxury-gold transition-colors"
+                      className="text-luxury-dark/80 hover:text-luxury-dark transition-colors"
                     >
                       +58 412 731 6397
                     </a>
@@ -73,12 +73,12 @@ export default function ContactSection() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-luxury-gold/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="text-luxury-gold" size={20} />
+                  <div className="w-12 h-12 rounded-full bg-luxury-dark/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="text-luxury-dark" size={20} />
                   </div>
                   <div>
-                    <p className="font-semibold mb-1">Ubicación</p>
-                    <p className="text-luxury-light/70">
+                    <p className="font-semibold mb-1 text-luxury-dark">Ubicación</p>
+                    <p className="text-luxury-dark/80">
                       Parque Nacional Morrocoy
                       <br />
                       Estado Falcón, Venezuela
@@ -100,7 +100,7 @@ export default function ContactSection() {
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-luxury-dark"
                 >
                   Nombre completo
                 </label>
@@ -108,7 +108,7 @@ export default function ContactSection() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-gold transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-dark transition-colors"
                   placeholder="Juan Pérez"
                 />
               </div>
@@ -116,7 +116,7 @@ export default function ContactSection() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-luxury-dark"
                 >
                   Email
                 </label>
@@ -124,7 +124,7 @@ export default function ContactSection() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-gold transition-colors"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-luxury-light focus:outline-none focus:border-luxury-dark transition-colors"
                   placeholder="juan@example.com"
                 />
               </div>
@@ -132,7 +132,7 @@ export default function ContactSection() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-luxury-dark"
                 >
                   Mensaje
                 </label>
@@ -146,7 +146,7 @@ export default function ContactSection() {
 
               <Button
                 type="submit"
-                className="w-full bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark font-semibold py-6"
+                className="w-full bg-luxury-dark hover:bg-luxury-dark/90 text-white font-semibold py-6"
               >
                 Enviar Mensaje
                 <Send className="ml-2 w-5 h-5" />

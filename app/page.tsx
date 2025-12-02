@@ -4,7 +4,6 @@ import HeroVideo from "@/components/HeroVideo";
 import Header from "@/components/Header";
 import AboutSection from "@/components/sections/AboutSection";
 import DestinationsSection from "@/components/sections/DestinationsSection";
-import GallerySection from "@/components/sections/GallerySection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import ContactMobileSection from "@/components/SocialButtonsMobile";
@@ -39,13 +38,10 @@ export default function HomePage() {
 
         </section>
 
-        {/* Secciones adicionales - Orden: Destinos, Experiencia, Galería, Contacto */}
+        {/* Secciones adicionales - Orden: Destinos, Experiencia, Contacto */}
         <DestinationsSection />
         <AboutSection />
-        {/* Ocultar en móvil */}
-        <div className="hidden md:block">
-          <GallerySection />
-        </div>
+        {/* Contacto - Solo visible en desktop */}
         <div className="hidden md:block">
           <ContactSection />
         </div>
