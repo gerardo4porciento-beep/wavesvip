@@ -45,9 +45,9 @@ export default function HomePage() {
 
         </section>
 
-        {/* Secciones adicionales */}
-        <AboutSection />
+        {/* Secciones adicionales - Orden: Destinos, Experiencia, Galería, Contacto */}
         <DestinationsSection />
+        <AboutSection />
         <GallerySection />
         <ContactSection />
       </main>
