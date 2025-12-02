@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface HeroVideoProps {
   videoUrl: string;
@@ -153,25 +156,6 @@ export default function HeroVideo({
         style={{ backgroundImage: `url(${fallbackImage})` }}
       >
         <div className="absolute inset-0 bg-luxury-dark/40" />
-        {(title || subtitle) && (
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center px-4"
-            >
-              {title && (
-                <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-4">
-                  {title}
-                </h1>
-              )}
-              {subtitle && (
-                <p className="text-xl md:text-2xl text-white/90">{subtitle}</p>
-              )}
-            </motion.div>
-          </div>
-        )}
       </div>
     );
   }
@@ -237,29 +221,46 @@ export default function HeroVideo({
         </div>
       )}
 
-      {/* Contenido sobre el video */}
-      {(title || subtitle) && (
-        <div className="absolute inset-0 flex items-center justify-center z-10">
-          <motion.div
+      {/* Texto centrado */}
+      {!isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center px-4 max-w-4xl"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-tight text-center"
+            style={{ 
+              fontFamily: '"Arial Arabic Bold", "Arial Arabic", Arial, sans-serif',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
+              letterSpacing: '0.05em'
+            }}
           >
-            {title && (
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-6 text-balance">
-                {title}
-              </h1>
-            )}
-            {subtitle && (
-              <p className="text-xl md:text-2xl lg:text-3xl text-white/90 text-balance">
-                {subtitle}
-              </p>
-            )}
-          </motion.div>
+            Amazing Awaits
+          </motion.h1>
         </div>
       )}
 
+      {/* Barra de búsqueda - Parte inferior */}
+      {!isLoading && (
+        <div className="absolute bottom-20 left-0 right-0 flex items-center justify-center z-20 px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="group w-full max-w-4xl flex items-center gap-0 bg-white/98 backdrop-blur-sm border-4 border-luxury-gold rounded-full p-1 shadow-2xl hover:bg-luxury-gold transition-colors duration-300"
+          >
+            <Search className="w-6 h-6 text-gray-400 ml-2 group-hover:text-luxury-dark transition-colors duration-300" />
+            <Input
+              type="text"
+              placeholder="Search..."
+              className="flex-1 border-0 focus:ring-0 bg-transparent text-luxury-light text-lg placeholder:text-gray-400 group-hover:placeholder:text-luxury-dark group-hover:text-luxury-dark transition-colors duration-300"
+            />
+            <Button className="bg-luxury-gold text-luxury-dark border-2 border-luxury-gold hover:bg-black hover:text-white hover:border-black uppercase font-bold px-8 py-3 text-base rounded-full transition-colors duration-300">
+              Search
+            </Button>
+          </motion.div>
+        </div>
+      )}
 
       {/* Indicador de carga progresiva */}
       {!isVideoLoaded && currentSource && (
