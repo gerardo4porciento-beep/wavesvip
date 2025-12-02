@@ -79,6 +79,19 @@ export default function ContactMobileSection() {
             </Link>
           </motion.div>
         </div>
+
+        {/* Copyright sutil */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-12 pt-8 border-t border-luxury-dark/20 text-center"
+        >
+          <p className="text-xs text-luxury-dark/60">
+            © {new Date().getFullYear()} Waves VIP. Todos los derechos reservados.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
