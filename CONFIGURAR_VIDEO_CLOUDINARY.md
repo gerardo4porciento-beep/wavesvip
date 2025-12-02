@@ -128,3 +128,5 @@ NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=wavesvip
 
 **¿Listo para configurar? Solo necesito que me digas la URL de tu video de Cloudinary y lo configuro por ti! 🎥**
 
+
+

@@ -8,8 +8,12 @@
     --font-playfair: "Playfair Display", serif;
   }
 
+  * {
+    @apply border-border;
+  }
+
   body {
-    @apply bg-white text-luxury-light antialiased;
+    @apply bg-luxury-dark text-luxury-light antialiased;
     font-family: var(--font-inter);
   }
 
@@ -27,17 +31,6 @@
   .video-container {
     @apply absolute inset-0 w-full h-full;
     object-fit: cover;
-    /* Mejorar calidad de renderizado y reducir pixelado */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-    /* Forzar renderizado de alta calidad */
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    /* Suavizar escalado */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Smooth scrollbar */
@@ -46,7 +39,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    @apply bg-luxury-dark;
   }
 
   ::-webkit-scrollbar-thumb {

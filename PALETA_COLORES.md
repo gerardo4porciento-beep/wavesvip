@@ -54,3 +54,5 @@ Una vez que me proporciones los colores, actualizaré:
 
 **El logo ya está integrado en Header y Footer. Solo falta actualizar los colores! 🎨**
 
+
+

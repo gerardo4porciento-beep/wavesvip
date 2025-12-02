@@ -74,12 +74,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
-            <div className="w-6 h-10 border-2 border-luxury-light/50 rounded-full flex items-start justify-center p-2">
-              <div className="w-1 h-3 bg-luxury-light/50 rounded-full" />
-            </div>
-          </div>
             </div>
           )}
 
@@ -98,14 +92,6 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* Scroll Indicator (si hay video) */}
-          {heroVideoUrl && !heroVideoUrl.includes("your-cloud-name") && (
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
-            <div className="w-6 h-10 border-2 border-luxury-light/50 rounded-full flex items-start justify-center p-2">
-              <div className="w-1 h-3 bg-luxury-light/50 rounded-full" />
-            </div>
-          </div>
-          )}
         </section>
 
         {/* Secciones adicionales */}

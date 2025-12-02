@@ -117,3 +117,5 @@ NEXT_PUBLIC_HERO_VIDEO_URL=https://res.cloudinary.com/do7eqgtjs/video/upload/f_a
 
 **¡Tu video está listo y optimizado! Solo reinicia el servidor y deberías verlo funcionando. 🎥✨**
 
+
+

@@ -261,3 +261,5 @@ Se ha desarrollado la landing page completa según los requerimientos del prompt
 
 **¡La landing page está completamente desarrollada y lista para usar!** Solo falta configurar las credenciales de los servicios externos (Supabase, Google Calendar, Stripe, etc.) según las guías proporcionadas.
 
+
+

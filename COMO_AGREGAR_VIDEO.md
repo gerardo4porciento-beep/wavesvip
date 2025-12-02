@@ -153,3 +153,5 @@ Cuando agregues un video real, el componente `HeroVideo` se activará automátic
 
 **¿Necesitas ayuda con algo más?** El diseño actual es perfectamente funcional y elegante. El video es opcional y se puede agregar cuando estés listo.
 
+
+

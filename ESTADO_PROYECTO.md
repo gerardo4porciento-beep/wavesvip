@@ -129,3 +129,5 @@
 
 **Conclusión**: El proyecto está **funcionalmente completo** para la landing page y el sistema de reservas. Las tareas pendientes son principalmente configuración de servicios externos y funcionalidades opcionales (panel de admin).
 
+
+

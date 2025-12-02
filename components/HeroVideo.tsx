@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface HeroVideoProps {
@@ -143,28 +142,6 @@ export default function HeroVideo({
     };
   }, [currentSource, isVideoLoaded]);
 
-  const togglePlay = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (isPlaying) {
-      video.pause();
-      setIsPlaying(false);
-    } else {
-      video.play().catch(() => {
-        setIsPlaying(false);
-      });
-      setIsPlaying(true);
-    }
-  };
-
-  const toggleMute = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = !isMuted;
-    setIsMuted(!isMuted);
-  };
 
   if (hasError && fallbackImage) {
     return (
@@ -283,30 +260,6 @@ export default function HeroVideo({
         </div>
       )}
 
-      {/* Controles de video */}
-      {showControls && (
-        <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMute}
-            className="p-3 rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
-            aria-label={isMuted ? "Activar sonido" : "Silenciar"}
-          >
-            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={togglePlay}
-            className="p-3 rounded-full bg-black/50 backdrop-blur-sm text-white hover:bg-black/70 transition-colors"
-            aria-label={isPlaying ? "Pausar" : "Reproducir"}
-          >
-            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-          </motion.button>
-        </div>
-      )}
 
       {/* Indicador de carga progresiva */}
       {!isVideoLoaded && currentSource && (
