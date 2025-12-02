@@ -261,10 +261,17 @@ export default function HeroVideo({
 
   return (
     <div 
-      className={cn("relative w-full overflow-hidden bg-black", className)}
+      className={cn("relative w-full bg-black", className)}
       style={{
         height: '100dvh',
         minHeight: '-webkit-fill-available',
+        marginTop: 'calc(-1 * env(safe-area-inset-top, 0px))',
+        marginLeft: 'calc(-1 * env(safe-area-inset-left, 0px))',
+        marginRight: 'calc(-1 * env(safe-area-inset-right, 0px))',
+        width: 'calc(100vw + env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px))',
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingLeft: 'env(safe-area-inset-left, 0px)',
+        paddingRight: 'env(safe-area-inset-right, 0px)',
       }}
     >
       {/* Video Element */}

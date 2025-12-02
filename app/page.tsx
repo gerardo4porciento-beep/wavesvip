@@ -23,7 +23,7 @@ export default function HomePage() {
       <Header />
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative">
+        <section className="relative overflow-visible">
           {heroVideoUrl && !heroVideoUrl.includes("your-cloud-name") ? (
             <HeroVideo
               videoUrl={heroVideoUrl}

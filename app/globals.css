@@ -34,21 +34,7 @@
     height: 100%;
     object-fit: cover;
     background-color: #000000;
-  }
-
-  /* Para iPhone - extender video sobre el notch */
-  @supports (-webkit-touch-callout: none) {
-    .video-container {
-      top: calc(-1 * env(safe-area-inset-top));
-      left: calc(-1 * env(safe-area-inset-left));
-      right: calc(-1 * env(safe-area-inset-right));
-      bottom: calc(-1 * env(safe-area-inset-bottom));
-      width: calc(100% + env(safe-area-inset-left) + env(safe-area-inset-right));
-      height: calc(100% + env(safe-area-inset-top) + env(safe-area-inset-bottom));
-      min-width: 100vw;
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-    }
+    z-index: 0;
   }
 
   /* Smooth scrollbar */
