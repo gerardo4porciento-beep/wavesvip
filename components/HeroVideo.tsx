@@ -339,7 +339,7 @@ export default function HeroVideo({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-4"
+            className="flex flex-col items-center justify-center gap-0"
             style={{ 
               fontFamily: 'var(--font-meta-headline), "FF Meta Headline Compressed Bold", "FF Meta Headline", "Meta", Arial, sans-serif',
               letterSpacing: '-0.02em',
@@ -348,7 +348,10 @@ export default function HeroVideo({
             }}
           >
             <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white uppercase tracking-tight text-center">
-              VIVE LA EXPERIENCIA
+              VIVE LA
+            </h1>
+            <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white uppercase tracking-tight text-center">
+              EXPERIENCIA
             </h1>
           </motion.div>
         </div>
