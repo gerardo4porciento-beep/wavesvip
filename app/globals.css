@@ -29,6 +29,9 @@
   .video-container {
     @apply absolute inset-0 w-full h-full;
     object-fit: cover;
+    background-color: #000000;
+    min-width: 100%;
+    min-height: 100%;
   }
 
   /* Smooth scrollbar */
