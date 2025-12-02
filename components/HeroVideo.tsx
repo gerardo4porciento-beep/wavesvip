@@ -225,21 +225,25 @@ export default function HeroVideo({
       {/* Texto centrado */}
       {!isLoading && (
         <div className="absolute inset-0 flex items-center justify-center z-20">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white uppercase tracking-tight text-center"
+            className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-4"
             style={{ 
               fontFamily: 'var(--font-meta-headline), "FF Meta Headline Compressed Bold", "FF Meta Headline", "Meta", Arial, sans-serif',
-              textShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
               letterSpacing: '-0.02em',
               fontWeight: 700,
               fontStretch: 'condensed'
             }}
           >
-            True Vibes
-          </motion.h1>
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white uppercase tracking-tight text-center">
+              TRUE
+            </h1>
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold text-white uppercase tracking-tight text-center">
+              VIBES
+            </h1>
+          </motion.div>
         </div>
       )}
 
@@ -265,7 +269,7 @@ export default function HeroVideo({
               readOnly
             />
             <Button 
-              className="bg-luxury-gold text-luxury-dark border-2 border-luxury-gold hover:bg-black hover:text-white hover:border-black uppercase font-bold px-8 py-3 text-base rounded-full transition-colors duration-300"
+              className="hidden md:flex bg-luxury-gold text-luxury-dark border-2 border-luxury-gold hover:bg-black hover:text-white hover:border-black uppercase font-bold px-8 py-3 text-base rounded-full transition-colors duration-300"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsSearchMenuOpen(true);
