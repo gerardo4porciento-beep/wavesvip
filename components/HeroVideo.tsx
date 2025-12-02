@@ -260,18 +260,19 @@ export default function HeroVideo({
   }
 
   return (
-    <div className={cn("relative w-full h-screen overflow-hidden bg-black", className)}>
+    <div 
+      className={cn("relative w-full overflow-hidden bg-black", className)}
+      style={{
+        height: '100vh',
+        height: '100dvh',
+        minHeight: '-webkit-fill-available',
+      }}
+    >
       {/* Video Element */}
       <video
         key={videoKey}
         ref={videoRef}
-        className="video-container object-cover"
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          backgroundColor: '#000000'
-        }}
+        className="video-container"
         poster={posterUrl}
         playsInline
         webkit-playsinline="true"

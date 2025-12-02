@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
 
 export default function ContactSection() {
   return (
@@ -85,6 +86,66 @@ export default function ContactSection() {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Botones de redes sociales */}
+            <div className="mt-8">
+              <h3 className="text-2xl font-display font-bold mb-6 text-luxury-dark">
+                Redes Sociales
+              </h3>
+              <div className="space-y-4">
+                {/* WhatsApp Button */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Link
+                    href="https://wa.me/584127316397"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 w-full bg-[#25D366] rounded-2xl p-5 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
+                  >
+                    <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <MessageCircle className="text-white" size={28} />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className="text-xl font-bold text-white mb-1">WhatsApp</h3>
+                      <p className="text-white/90 text-sm">Escríbenos directamente</p>
+                    </div>
+                    <div className="text-white/80 group-hover:translate-x-1 transition-transform">
+                      →
+                    </div>
+                  </Link>
+                </motion.div>
+
+                {/* Instagram Button */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  <Link
+                    href="https://www.instagram.com/wavesvip.ve"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 w-full bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 rounded-2xl p-5 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
+                  >
+                    <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Instagram className="text-white" size={28} />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className="text-xl font-bold text-white mb-1">Instagram</h3>
+                      <p className="text-white/90 text-sm">Síguenos y conoce más</p>
+                    </div>
+                    <div className="text-white/80 group-hover:translate-x-1 transition-transform">
+                      →
+                    </div>
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </motion.div>
