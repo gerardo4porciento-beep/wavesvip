@@ -3,7 +3,7 @@
 import HeroVideo from "@/components/HeroVideo";
 import Header from "@/components/Header";
 import AboutSection from "@/components/sections/AboutSection";
-import FleetSection from "@/components/sections/FleetSection";
+import DestinationsSection from "@/components/sections/DestinationsSection";
 import GallerySection from "@/components/sections/GallerySection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
@@ -47,7 +47,7 @@ export default function HomePage() {
 
         {/* Secciones adicionales */}
         <AboutSection />
-        <FleetSection />
+        <DestinationsSection />
         <GallerySection />
         <ContactSection />
       </main>

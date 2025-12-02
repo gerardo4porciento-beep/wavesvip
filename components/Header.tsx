@@ -20,11 +20,11 @@ export default function Header() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             <Link
-              href="/#embarcaciones"
+              href="/#destinos"
               className="text-white uppercase text-sm font-medium tracking-wide hover:text-luxury-gold transition-colors"
               style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
             >
-              Embarcaciones
+              Destinos
             </Link>
             <Link
               href="/#experiencia"
@@ -77,12 +77,12 @@ export default function Header() {
               className="lg:hidden mt-6 pb-4 space-y-4 bg-black/20 backdrop-blur-md rounded-lg p-4"
             >
               <Link
-                href="/#embarcaciones"
+                href="/#destinos"
                 className="block text-white uppercase text-sm font-medium tracking-wide hover:text-luxury-gold transition-colors"
                 style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Embarcaciones
+                Destinos
               </Link>
               <Link
                 href="/#experiencia"
