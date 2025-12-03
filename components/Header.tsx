@@ -65,7 +65,7 @@ export default function Header() {
             >
               <Instagram size={20} />
             </a>
-            <Link href="/reservar">
+            <Link href="/reservar" target="_blank" rel="noopener noreferrer">
               <Button
                 className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark font-semibold uppercase text-sm px-6 py-2 tracking-wide border-0"
                 style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}
@@ -148,7 +148,7 @@ export default function Header() {
                   <Instagram size={24} />
                 </a>
               </div>
-              <Link href="/reservar" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="/reservar" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button
                   className="w-full bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark font-semibold uppercase text-sm py-2 tracking-wide"
                   style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}

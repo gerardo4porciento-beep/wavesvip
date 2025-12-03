@@ -165,7 +165,7 @@ export default function FleetSection() {
                     </p>
                     <p className="text-sm text-luxury-light/60">por día</p>
                   </div>
-                  <Link href={`/reservar?vessel=${vessel.id}`}>
+                  <Link href={`/reservar?vessel=${vessel.id}`} target="_blank" rel="noopener noreferrer">
                     <Button className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark">
                       Reservar
                       <ArrowRight className="ml-2 w-4 h-4" />
@@ -185,7 +185,7 @@ export default function FleetSection() {
           transition={{ duration: 0.6 }}
           className="text-center mt-16"
         >
-          <Link href="/reservar">
+          <Link href="/reservar" target="_blank" rel="noopener noreferrer">
             <Button
               size="lg"
               variant="outline"

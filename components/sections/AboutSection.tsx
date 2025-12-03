@@ -17,7 +17,7 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-luxury-light">
+          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-luxury-light">
             La Experiencia Waves VIP
           </h2>
           <p className="text-base md:text-lg text-luxury-light/90 max-w-2xl mx-auto">
@@ -59,7 +59,7 @@ export default function AboutSection() {
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/20 text-luxury-light mb-4">
                 <feature.icon size={24} />
               </div>
-              <h3 className="text-lg md:text-xl font-display font-semibold mb-3 text-luxury-light">
+              <h3 className="text-lg md:text-xl font-display font-bold mb-3 text-luxury-light">
                 {feature.title}
               </h3>
               <p className="text-sm md:text-base text-luxury-light/85 leading-relaxed">

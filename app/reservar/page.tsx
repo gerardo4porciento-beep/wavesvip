@@ -6,141 +6,213 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Calendar, CreditCard, User, Check } from "lucide-react";
+import { ArrowLeft, Calendar, CreditCard, Users, Check, Loader2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import CalendarAvailability from "@/components/CalendarAvailability";
-import type { Vessel } from "@/types";
 
-// Datos de ejemplo - En producción vendrán de Supabase
-const vessels: Vessel[] = [
-  {
-    id: "1",
-    name: "Yate Premium 50",
-    description:
-      "Embarcación de lujo de 50 pies, equipada con todas las comodidades para una experiencia inolvidable en Morrocoy.",
-    capacity: 12,
-    pricePerDay: 1500,
-    images: [
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800",
-    ],
-    features: [
-      "Aire acondicionado",
-      "Cocina completa",
-      "WiFi",
-      "Equipo de sonido",
-      "Esnórquel incluido",
-    ],
-    specifications: {
-      length: "50 pies",
-      year: 2023,
-      engine: "Twin Diesel 800hp",
-    },
-    available: true,
-  },
-  {
-    id: "2",
-    name: "Lancha Deportiva Elite",
-    description:
-      "Velocidad y estilo se combinan en esta embarcación deportiva ideal para grupos pequeños que buscan aventura.",
-    capacity: 6,
-    pricePerDay: 800,
-    images: [
-      "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800",
-    ],
-    features: [
-      "Velocidad máxima",
-      "Sistema de sonido",
-      "Equipamiento de pesca",
-      "Esnórquel",
-    ],
-    specifications: {
-      length: "32 pies",
-      year: 2024,
-      engine: "Dual Outboard 400hp",
-    },
-    available: true,
-  },
-  {
-    id: "3",
-    name: "Catamarán de Lujo",
-    description:
-      "Amplio y estable, perfecto para grupos grandes que desean disfrutar del mar con máximo confort y espacio.",
-    capacity: 20,
-    pricePerDay: 2500,
-    images: [
-      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
-    ],
-    features: [
-      "Amplios espacios",
-      "Terraza superior",
-      "Bar completo",
-      "Cabañas",
-      "Sistema de entretenimiento",
-    ],
-    specifications: {
-      length: "65 pies",
-      year: 2023,
-      engine: "Twin Diesel 1200hp",
-    },
-    available: true,
-  },
-];
+type Step = "guests" | "date" | "summary" | "availability" | "payment";
 
-type Step = "vessel" | "date" | "guest" | "payment";
+// Tarifas por cantidad de personas (valores de ejemplo - el usuario proporcionará los reales)
+const PRICING: Record<number, number> = {
+  6: 1200,
+  8: 1500,
+  10: 1800,
+  12: 2000,
+};
+
+const GUEST_OPTIONS = [6, 8, 10, 12] as const;
 
 export default function BookingPage() {
-  const [step, setStep] = useState<Step>("vessel");
-  const [selectedVessel, setSelectedVessel] = useState<Vessel | null>(null);
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const [step, setStep] = useState<Step>("guests");
+  const [selectedGuests, setSelectedGuests] = useState<number | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
   const [guestInfo, setGuestInfo] = useState({
     name: "",
     email: "",
     phone: "",
   });
-
-  // Obtener vesselId de la URL
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const vesselId = params.get("vessel");
-    if (vesselId) {
-      const vessel = vessels.find((v) => v.id === vesselId);
-      if (vessel) {
-        setSelectedVessel(vessel);
-        setStep("date");
-      }
-    }
-  }, []);
+  const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [availabilityResult, setAvailabilityResult] = useState<{
+    available: boolean;
+    error?: string;
+  } | null>(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const calculateTotal = () => {
-    if (!selectedVessel || !startDate || !endDate) return 0;
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) || 1;
-    return days * selectedVessel.pricePerDay;
+    if (!selectedGuests || !selectedDate) return 0;
+    return PRICING[selectedGuests] || 0;
   };
 
   const handleDateSelect = (date: string) => {
-    if (!startDate) {
-      setStartDate(date);
-    } else if (!endDate && date > startDate) {
-      setEndDate(date);
-    } else {
-      setStartDate(date);
-      setEndDate("");
+    setSelectedDate(date);
+  };
+
+  const handleContinueToSummary = () => {
+    if (selectedGuests && selectedDate) {
+      setStep("summary");
+    }
+  };
+
+  const handleAcceptReservation = async () => {
+    if (!selectedDate || !selectedGuests) return;
+
+    setIsCheckingAvailability(true);
+    setAvailabilityResult(null);
+
+    try {
+      // Calcular fecha de fin (asumiendo que es un día completo)
+      const startDate = new Date(selectedDate);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 1);
+
+      const response = await fetch("/api/booking/check-availability", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          startDate: startDate.toISOString().split("T")[0],
+          endDate: endDate.toISOString().split("T")[0],
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Error al verificar disponibilidad");
+      }
+
+      setAvailabilityResult({
+        available: data.available,
+      });
+
+      if (data.available) {
+        setStep("payment");
+      } else {
+        setStep("availability");
+      }
+    } catch (error) {
+      console.error("Error verificando disponibilidad:", error);
+      setAvailabilityResult({
+        available: false,
+        error: error instanceof Error ? error.message : "Error desconocido",
+      });
+      setStep("availability");
+    } finally {
+      setIsCheckingAvailability(false);
+    }
+  };
+
+  const handleProcessPayment = async () => {
+    if (!selectedPaymentMethod || !selectedGuests || !selectedDate || !total) return;
+
+    setIsProcessingPayment(true);
+    setPaymentError(null);
+
+    try {
+      const metadata = {
+        guests: selectedGuests.toString(),
+        date: selectedDate,
+        name: guestInfo.name,
+        email: guestInfo.email,
+        phone: guestInfo.phone,
+      };
+
+      if (selectedPaymentMethod === "stripe") {
+        const response = await fetch("/api/payment/create-stripe-intent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: total,
+            currency: "USD",
+            metadata,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Error al crear el pago");
+        }
+
+        // Redirigir a Stripe Checkout o mostrar formulario de pago
+        // Por ahora, mostramos un mensaje de éxito
+        alert(`Payment Intent creado: ${data.paymentIntentId}\n\nEn producción, esto redirigiría a Stripe Checkout o mostraría el formulario de pago.`);
+      } else if (selectedPaymentMethod === "paypal") {
+        const response = await fetch("/api/payment/create-paypal-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: total,
+            currency: "USD",
+            metadata,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Error al crear el pago");
+        }
+
+        // Redirigir a PayPal
+        if (data.approvalUrl) {
+          window.location.href = data.approvalUrl;
+        } else {
+          alert(`Orden de PayPal creada: ${data.orderId}\n\nEn producción, esto redirigiría a PayPal.`);
+        }
+      } else if (selectedPaymentMethod === "binance") {
+        const response = await fetch("/api/payment/create-binance-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: total,
+            currency: "USDT",
+            metadata,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Error al crear el pago");
+        }
+
+        // Redirigir a Binance Pay o mostrar QR
+        if (data.checkoutUrl) {
+          window.location.href = data.checkoutUrl;
+        } else if (data.qrCodeUrl) {
+          // Mostrar QR code en un modal o nueva ventana
+          window.open(data.qrCodeUrl, "_blank");
+        } else {
+          alert(`Orden de Binance Pay creada: ${data.orderId}\n\nEn producción, esto mostraría el QR o redirigiría a Binance Pay.`);
+        }
+      }
+    } catch (error) {
+      console.error("Error procesando pago:", error);
+      setPaymentError(
+        error instanceof Error ? error.message : "Error desconocido al procesar el pago"
+      );
+    } finally {
+      setIsProcessingPayment(false);
     }
   };
 
   const total = calculateTotal();
-  const days = startDate && endDate
-    ? Math.ceil((new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24))
-    : 0;
 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-white text-luxury-light pt-16 pb-12 px-4">
+      <main className="min-h-screen bg-[#B3E5FC] text-luxury-light pt-16 pb-12 px-4">
         <div className="container mx-auto max-w-6xl">
           {/* Breadcrumb */}
           <Link
@@ -154,12 +226,12 @@ export default function BookingPage() {
           {/* Progress Steps */}
           <div className="flex items-center justify-center mb-12 gap-4 md:gap-8">
             {[
-              { key: "vessel", label: "Embarcación", icon: User },
+              { key: "guests", label: "Personas", icon: Users },
               { key: "date", label: "Fecha", icon: Calendar },
-              { key: "guest", label: "Datos", icon: User },
+              { key: "summary", label: "Resumen", icon: Check },
               { key: "payment", label: "Pago", icon: CreditCard },
             ].map((s, index) => {
-              const stepIndex = ["vessel", "date", "guest", "payment"].indexOf(step);
+              const stepIndex = ["guests", "date", "summary", "payment"].indexOf(step);
               const isCompleted = index < stepIndex;
               const isCurrent = index === stepIndex;
               const Icon = s.icon;
@@ -204,45 +276,32 @@ export default function BookingPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2">
-              {/* Step 1: Select Vessel */}
-              {step === "vessel" && (
+              {/* Step 1: Select Guests */}
+              {step === "guests" && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>Selecciona tu Embarcación</CardTitle>
+                    <CardTitle>Selecciona la cantidad de personas</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      {vessels.map((vessel) => (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {GUEST_OPTIONS.map((guests) => (
                         <button
-                          key={vessel.id}
+                          key={guests}
                           onClick={() => {
-                            setSelectedVessel(vessel);
+                            setSelectedGuests(guests);
                             setStep("date");
                           }}
-                          className="w-full text-left p-4 border border-luxury-light/10 rounded-lg hover:border-luxury-gold hover:bg-luxury-gold/5 transition-all"
+                          className={`p-6 border-2 rounded-lg transition-all text-center ${
+                            selectedGuests === guests
+                              ? "border-luxury-gold bg-luxury-gold/10"
+                              : "border-gray-200 hover:border-luxury-gold/50 hover:bg-luxury-gold/5"
+                          }`}
                         >
-                          <div className="flex gap-4">
-                            <img
-                              src={vessel.images[0]}
-                              alt={vessel.name}
-                              className="w-24 h-24 object-cover rounded"
-                            />
-                            <div className="flex-1">
-                              <h3 className="text-xl font-bold mb-1">
-                                {vessel.name}
-                              </h3>
-                              <p className="text-luxury-light/70 text-sm mb-2 line-clamp-2">
-                                {vessel.description}
-                              </p>
-                              <div className="flex items-center justify-between">
-                                <span className="text-luxury-gold font-bold">
-                                  {formatCurrency(vessel.pricePerDay)}/día
-                                </span>
-                                <span className="text-sm text-luxury-light/60">
-                                  {vessel.capacity} personas
-                                </span>
-                              </div>
-                            </div>
+                          <Users className="w-8 h-8 mx-auto mb-2 text-luxury-gold" />
+                          <div className="text-2xl font-bold">{guests}</div>
+                          <div className="text-sm text-luxury-light/70 mt-1">personas</div>
+                          <div className="text-lg font-semibold text-luxury-gold mt-2">
+                            {formatCurrency(PRICING[guests])}
                           </div>
                         </button>
                       ))}
@@ -252,10 +311,10 @@ export default function BookingPage() {
               )}
 
               {/* Step 2: Select Date */}
-              {step === "date" && selectedVessel && (
+              {step === "date" && selectedGuests && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>Selecciona tus Fechas</CardTitle>
+                    <CardTitle>Selecciona la fecha</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CalendarAvailability
@@ -267,40 +326,27 @@ export default function BookingPage() {
                       }
                       onDateSelect={handleDateSelect}
                     />
-                    <div className="mt-6 flex gap-4">
-                      <div className="flex-1">
-                        <label className="block text-sm font-medium mb-2">
-                          Fecha de Inicio
-                        </label>
-                        <Input
-                          type="date"
-                          value={startDate}
-                          onChange={(e) => setStartDate(e.target.value)}
-                          min={new Date().toISOString().split("T")[0]}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label className="block text-sm font-medium mb-2">
-                          Fecha de Fin
-                        </label>
-                        <Input
-                          type="date"
-                          value={endDate}
-                          onChange={(e) => setEndDate(e.target.value)}
-                          min={startDate || new Date().toISOString().split("T")[0]}
-                        />
-                      </div>
+                    <div className="mt-6">
+                      <label className="block text-sm font-medium mb-2">
+                        Fecha seleccionada
+                      </label>
+                      <Input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        min={new Date().toISOString().split("T")[0]}
+                      />
                     </div>
                     <div className="mt-6 flex gap-4">
                       <Button
                         variant="outline"
-                        onClick={() => setStep("vessel")}
+                        onClick={() => setStep("guests")}
                       >
                         Atrás
                       </Button>
                       <Button
-                        onClick={() => setStep("guest")}
-                        disabled={!startDate || !endDate}
+                        onClick={handleContinueToSummary}
+                        disabled={!selectedDate}
                         className="flex-1 bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark"
                       >
                         Continuar
@@ -310,51 +356,72 @@ export default function BookingPage() {
                 </Card>
               )}
 
-              {/* Step 3: Guest Information */}
-              {step === "guest" && selectedVessel && (
+              {/* Step 3: Summary and Accept */}
+              {step === "summary" && selectedGuests && selectedDate && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>Información del Huésped</CardTitle>
+                    <CardTitle>Resumen de tu reserva</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2">
-                          Nombre Completo
-                        </label>
-                        <Input
-                          value={guestInfo.name}
-                          onChange={(e) =>
-                            setGuestInfo({ ...guestInfo, name: e.target.value })
-                          }
-                          placeholder="Juan Pérez"
-                        />
+                    <div className="space-y-6">
+                      <div className="bg-luxury-gold/10 p-4 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-luxury-light/70">Cantidad de personas</span>
+                          <span className="font-bold text-lg">{selectedGuests}</span>
+                        </div>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-luxury-light/70">Fecha</span>
+                          <span className="font-bold text-lg">{formatDate(selectedDate)}</span>
+                        </div>
+                        <div className="border-t border-luxury-light/20 pt-2 mt-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-luxury-light/70">Total</span>
+                            <span className="font-bold text-2xl text-luxury-gold">
+                              {formatCurrency(total)}
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">
-                          Email
-                        </label>
-                        <Input
-                          type="email"
-                          value={guestInfo.email}
-                          onChange={(e) =>
-                            setGuestInfo({ ...guestInfo, email: e.target.value })
-                          }
-                          placeholder="juan@example.com"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-2">
-                          Teléfono
-                        </label>
-                        <Input
-                          type="tel"
-                          value={guestInfo.phone}
-                          onChange={(e) =>
-                            setGuestInfo({ ...guestInfo, phone: e.target.value })
-                          }
-                          placeholder="+58 412 123 4567"
-                        />
+
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Nombre Completo
+                          </label>
+                          <Input
+                            value={guestInfo.name}
+                            onChange={(e) =>
+                              setGuestInfo({ ...guestInfo, name: e.target.value })
+                            }
+                            placeholder="Juan Pérez"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Email
+                          </label>
+                          <Input
+                            type="email"
+                            value={guestInfo.email}
+                            onChange={(e) =>
+                              setGuestInfo({ ...guestInfo, email: e.target.value })
+                            }
+                            placeholder="juan@example.com"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Teléfono
+                          </label>
+                          <Input
+                            type="tel"
+                            value={guestInfo.phone}
+                            onChange={(e) =>
+                              setGuestInfo({ ...guestInfo, phone: e.target.value })
+                            }
+                            placeholder="+58 412 123 4567"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="mt-6 flex gap-4">
@@ -365,61 +432,162 @@ export default function BookingPage() {
                         Atrás
                       </Button>
                       <Button
-                        onClick={() => setStep("payment")}
+                        onClick={handleAcceptReservation}
                         disabled={
-                          !guestInfo.name || !guestInfo.email || !guestInfo.phone
+                          !guestInfo.name || !guestInfo.email || !guestInfo.phone || isCheckingAvailability
                         }
                         className="flex-1 bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark"
                       >
-                        Continuar al Pago
+                        {isCheckingAvailability ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Verificando disponibilidad...
+                          </>
+                        ) : (
+                          "Aceptar y verificar disponibilidad"
+                        )}
                       </Button>
                     </div>
                   </CardContent>
                 </Card>
               )}
 
-              {/* Step 4: Payment */}
-              {step === "payment" && selectedVessel && (
+              {/* Step 4: Availability Result */}
+              {step === "availability" && availabilityResult && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Disponibilidad</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {availabilityResult.available ? (
+                      <div className="text-center py-8">
+                        <Check className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                        <h3 className="text-2xl font-bold mb-2">¡Fecha disponible!</h3>
+                        <p className="text-luxury-light/70 mb-6">
+                          Procede al pago para confirmar tu reserva.
+                        </p>
+                        <Button
+                          onClick={() => setStep("payment")}
+                          className="bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark"
+                        >
+                          Continuar al pago
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+                        <h3 className="text-2xl font-bold mb-2">Fecha no disponible</h3>
+                        <p className="text-luxury-light/70 mb-6">
+                          {availabilityResult.error || "Lo sentimos, esta fecha ya está reservada. Por favor, selecciona otra fecha."}
+                        </p>
+                        <Button
+                          onClick={() => {
+                            setStep("date");
+                            setSelectedDate("");
+                            setAvailabilityResult(null);
+                          }}
+                          variant="outline"
+                        >
+                          Seleccionar otra fecha
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Step 5: Payment */}
+              {step === "payment" && availabilityResult?.available && (
                 <Card>
                   <CardHeader>
                     <CardTitle>Completar Pago</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      <p className="text-luxury-light/70">
+                      <p className="text-luxury-light/70 mb-6">
                         Selecciona tu método de pago preferido:
                       </p>
                       <div className="grid gap-4">
-                        <button className="p-4 border border-luxury-light/10 rounded-lg hover:border-luxury-gold transition-all text-left">
+                        <button
+                          onClick={() => setSelectedPaymentMethod("stripe")}
+                          className={`p-4 border-2 rounded-lg transition-all text-left ${
+                            selectedPaymentMethod === "stripe"
+                              ? "border-luxury-gold bg-luxury-gold/10"
+                              : "border-luxury-light/10 hover:border-luxury-gold"
+                          }`}
+                        >
                           <div className="flex items-center justify-between">
-                            <span className="font-semibold">Tarjeta de Crédito/Débito</span>
+                            <div>
+                              <span className="font-semibold block">Tarjeta de Crédito/Débito</span>
+                              <span className="text-sm text-luxury-light/60">Visa, Mastercard, Amex</span>
+                            </div>
                             <span className="text-sm text-luxury-light/60">Stripe</span>
                           </div>
                         </button>
-                        <button className="p-4 border border-luxury-light/10 rounded-lg hover:border-luxury-gold transition-all text-left">
+                        <button
+                          onClick={() => setSelectedPaymentMethod("paypal")}
+                          className={`p-4 border-2 rounded-lg transition-all text-left ${
+                            selectedPaymentMethod === "paypal"
+                              ? "border-luxury-gold bg-luxury-gold/10"
+                              : "border-luxury-light/10 hover:border-luxury-gold"
+                          }`}
+                        >
                           <div className="flex items-center justify-between">
-                            <span className="font-semibold">PayPal</span>
+                            <div>
+                              <span className="font-semibold block">PayPal</span>
+                              <span className="text-sm text-luxury-light/60">Paga con tu cuenta PayPal</span>
+                            </div>
                           </div>
                         </button>
-                        <button className="p-4 border border-luxury-light/10 rounded-lg hover:border-luxury-gold transition-all text-left">
+                        <button
+                          onClick={() => setSelectedPaymentMethod("binance")}
+                          className={`p-4 border-2 rounded-lg transition-all text-left ${
+                            selectedPaymentMethod === "binance"
+                              ? "border-luxury-gold bg-luxury-gold/10"
+                              : "border-luxury-light/10 hover:border-luxury-gold"
+                          }`}
+                        >
                           <div className="flex items-center justify-between">
-                            <span className="font-semibold">Criptomonedas</span>
+                            <div>
+                              <span className="font-semibold block">Criptomonedas</span>
+                              <span className="text-sm text-luxury-light/60">BTC, ETH, BNB y más</span>
+                            </div>
                             <span className="text-sm text-luxury-light/60">Binance Pay</span>
                           </div>
                         </button>
                       </div>
                     </div>
+                    {paymentError && (
+                      <div className="mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                        <p className="text-red-400 text-sm">{paymentError}</p>
+                      </div>
+                    )}
                     <div className="mt-6 flex gap-4">
                       <Button
                         variant="outline"
-                        onClick={() => setStep("guest")}
+                        onClick={() => setStep("summary")}
+                        disabled={isProcessingPayment}
                       >
                         Atrás
                       </Button>
                       <Button
+                        onClick={handleProcessPayment}
+                        disabled={!selectedPaymentMethod || isProcessingPayment}
                         className="flex-1 bg-luxury-gold hover:bg-luxury-gold/90 text-luxury-dark"
                       >
-                        Confirmar y Pagar
+                        {isProcessingPayment ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Procesando...
+                          </>
+                        ) : (
+                          <>
+                            {selectedPaymentMethod === "stripe" && "Pagar con Stripe"}
+                            {selectedPaymentMethod === "paypal" && "Pagar con PayPal"}
+                            {selectedPaymentMethod === "binance" && "Pagar con Binance Pay"}
+                            {!selectedPaymentMethod && "Selecciona un método de pago"}
+                          </>
+                        )}
                       </Button>
                     </div>
                   </CardContent>
@@ -428,7 +596,7 @@ export default function BookingPage() {
             </div>
 
             {/* Sidebar - Reservation Summary */}
-            {(step !== "vessel") && selectedVessel && (
+            {step !== "guests" && selectedGuests && (
               <div className="lg:col-span-1">
                 <Card className="sticky top-24">
                   <CardHeader>
@@ -436,43 +604,23 @@ export default function BookingPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div>
-                      <img
-                        src={selectedVessel.images[0]}
-                        alt={selectedVessel.name}
-                        className="w-full h-40 object-cover rounded-lg mb-4"
-                      />
-                      <h3 className="font-bold text-lg">{selectedVessel.name}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Users className="w-5 h-5 text-luxury-gold" />
+                        <h3 className="font-bold text-lg">{selectedGuests} personas</h3>
+                      </div>
                     </div>
 
-                    {startDate && (
+                    {selectedDate && (
                       <div className="border-t border-luxury-light/10 pt-4">
                         <div className="flex justify-between mb-2">
-                          <span className="text-luxury-light/70">Check-in</span>
-                          <span>{formatDate(startDate)}</span>
+                          <span className="text-luxury-light/70">Fecha</span>
+                          <span>{formatDate(selectedDate)}</span>
                         </div>
-                        {endDate && (
-                          <>
-                            <div className="flex justify-between mb-2">
-                              <span className="text-luxury-light/70">Check-out</span>
-                              <span>{formatDate(endDate)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-luxury-light/70">Noches</span>
-                              <span>{days} {days === 1 ? "día" : "días"}</span>
-                            </div>
-                          </>
-                        )}
                       </div>
                     )}
 
                     {total > 0 && (
                       <div className="border-t border-luxury-light/10 pt-4 space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-luxury-light/70">
-                            {formatCurrency(selectedVessel.pricePerDay)} x {days} {days === 1 ? "día" : "días"}
-                          </span>
-                          <span>{formatCurrency(selectedVessel.pricePerDay * days)}</span>
-                        </div>
                         <div className="flex justify-between text-xl font-bold text-luxury-gold pt-4 border-t border-luxury-light/10">
                           <span>Total</span>
                           <span>{formatCurrency(total)}</span>
@@ -490,4 +638,3 @@ export default function BookingPage() {
     </>
   );
 }
-
