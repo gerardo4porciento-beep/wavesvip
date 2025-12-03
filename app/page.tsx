@@ -50,6 +50,11 @@ export default function HomePage() {
 
         {/* Sección de contacto móvil - Solo visible en móvil */}
         <ContactMobileSection />
+        
+        {/* Footer - Solo visible en móvil, después de contacto móvil */}
+        <div className="md:hidden">
+          <Footer />
+        </div>
       </main>
     </>
   );
