@@ -3,7 +3,7 @@ import { Instagram, Facebook, Youtube, ShieldCheck } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-luxury-gold w-full py-24 md:py-32 relative overflow-x-visible">
+    <footer className="bg-luxury-gold w-full pt-8 md:pt-12 pb-24 md:pb-32 relative overflow-x-visible">
       {/* Letras grandes WAVES que ocupan todo el ancho */}
       <div className="w-full px-4 md:px-8">
         <h1 
