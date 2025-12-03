@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="bg-luxury-gold w-full pt-2 md:pt-4 pb-0 relative overflow-x-visible">
+    <footer className="bg-luxury-gold w-full pt-2 md:pt-4 relative overflow-x-visible" style={{ paddingBottom: '0', marginBottom: '0' }}>
       {/* Letras grandes WAVES que ocupan todo el ancho */}
-      <div className="w-full px-4 md:px-8 pb-0 mb-0">
+      <div className="w-full px-4 md:px-8" style={{ paddingBottom: '0', marginBottom: '0' }}>
         <h1 
           className="text-white font-semibold leading-none select-none text-center w-full m-0 p-0"
           style={{ 
@@ -17,7 +17,7 @@ export default function Footer() {
             whiteSpace: 'nowrap',
             overflow: 'visible',
             display: 'block',
-            lineHeight: '1',
+            lineHeight: '0.9',
             margin: '0',
             marginBottom: '0',
             padding: '0',
