@@ -17,7 +17,7 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 text-luxury-light">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-luxury-light">
             La Experiencia Waves VIP
           </h2>
           <p className="text-base md:text-lg text-luxury-light/90 max-w-2xl mx-auto">
