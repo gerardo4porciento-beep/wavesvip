@@ -4,10 +4,10 @@ export default function Footer() {
       {/* Letras grandes WAVES que ocupan todo el ancho */}
       <div className="w-full px-4 md:px-8 pb-0 mb-0">
         <h1 
-          className="text-white font-black leading-none select-none text-center w-full m-0 p-0"
+          className="text-white font-semibold leading-none select-none text-center w-full m-0 p-0"
           style={{ 
-            fontFamily: '"Helvetica Neue", "Helvetica", "Arial Black", "Arial", sans-serif',
-            fontWeight: 900,
+            fontFamily: '"Helvetica Neue", "Helvetica", "Arial", sans-serif',
+            fontWeight: 600,
             fontSize: 'clamp(10rem, 28vw, 28rem)',
             letterSpacing: '-0.08em',
             fontStretch: 'condensed',
