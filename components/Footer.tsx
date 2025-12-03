@@ -3,24 +3,30 @@ import { Instagram, Facebook, Youtube, ShieldCheck } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-luxury-gold w-full min-h-screen relative overflow-hidden">
-      {/* Letras grandes WAVES VIP */}
-      <div className="absolute inset-0 flex items-center justify-center">
+    <footer className="bg-luxury-gold w-full py-24 md:py-32 relative overflow-x-hidden">
+      {/* Letras grandes WAVES que ocupan todo el ancho */}
+      <div className="w-screen relative left-1/2 -translate-x-1/2">
         <h1 
-          className="text-luxury-dark text-[20vw] md:text-[15vw] font-black leading-none tracking-tight select-none"
+          className="text-luxury-dark font-black leading-none select-none text-center"
           style={{ 
             fontFamily: '"Helvetica Neue", "Helvetica", "Arial Black", "Arial", sans-serif',
             fontWeight: 900,
-            letterSpacing: '-0.02em',
-            fontStretch: 'condensed'
+            fontSize: 'clamp(14rem, 40vw, 35rem)',
+            letterSpacing: '-0.12em',
+            fontStretch: 'condensed',
+            width: '100vw',
+            transform: 'scaleX(1.25)',
+            transformOrigin: 'center',
+            whiteSpace: 'nowrap',
+            overflow: 'visible'
           }}
         >
-          WAVES VIP
+          WAVES
         </h1>
       </div>
 
       {/* Enlaces inferiores izquierda */}
-      <div className="absolute bottom-8 left-8 flex flex-wrap gap-x-8 gap-y-2 z-10">
+      <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 flex flex-wrap gap-x-6 md:gap-x-8 gap-y-2 z-10">
         <Link
           href="/#experiencia"
           className="text-luxury-dark text-sm md:text-base font-medium hover:opacity-70 transition-opacity"
@@ -45,7 +51,7 @@ export default function Footer() {
       </div>
 
       {/* Iconos sociales inferiores derecha */}
-      <div className="absolute bottom-8 right-8 flex gap-4 z-10">
+      <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 flex gap-3 md:gap-4 z-10">
         <a
           href="https://facebook.com/wavesvip"
           target="_blank"

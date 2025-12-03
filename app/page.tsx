@@ -44,16 +44,13 @@ export default function HomePage() {
         {/* Contacto - Solo visible en desktop */}
         <div className="hidden md:block">
           <ContactSection />
+          {/* Footer - Solo visible en desktop, justo después de contacto */}
+          <Footer />
         </div>
 
         {/* Sección de contacto móvil - Solo visible en móvil */}
         <ContactMobileSection />
       </main>
-
-      {/* Footer - Solo visible en desktop */}
-      <div className="hidden md:block">
-        <Footer />
-      </div>
     </>
   );
 }
