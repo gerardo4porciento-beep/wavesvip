@@ -14,6 +14,45 @@ const TYPEWRITER_PHRASES = [
   "EXCURSION AL CAYO SOMBRERO"
 ];
 
+const destinations = [
+  {
+    id: "1",
+    name: "Cayo Sombrero",
+    image: "/cayos/cayo sombrero.png",
+    features: ["Playa", "Palmeras", "Agua cristalina"],
+  },
+  {
+    id: "2",
+    name: "Cayo Boca Seca",
+    image: "/cayos/cayo boca seca.png",
+    features: ["Coral", "Ideal para niños", "Snorkel"],
+  },
+  {
+    id: "3",
+    name: "Cayo Pescadores",
+    image: "/cayos/cayo pescadores.png",
+    features: ["Pesca", "Gastronomía", "Tradicional"],
+  },
+  {
+    id: "4",
+    name: "Cayo Playuelita",
+    image: "/cayos/cayo playuelita.png",
+    features: ["Familiar", "Protegido", "Aguas cristalinas"],
+  },
+  {
+    id: "5",
+    name: "Bajo de los Juanes",
+    image: "/cayos/bajo los juanes.png",
+    features: ["Arrecifes", "Vida marina", "Esnórquel"],
+  },
+  {
+    id: "6",
+    name: "Bajo 360",
+    image: "/cayos/bajo 360.png",
+    features: ["Vistas 360", "Buceo", "Esnórquel"],
+  },
+];
+
 interface HeroVideoProps {
   videoUrl: string;
   posterUrl?: string;
@@ -428,88 +467,53 @@ export default function HeroVideo({
               </button>
             </div>
 
-            {/* Barra de búsqueda dentro del menú */}
-            <div className="p-6 border-b-2 border-luxury-dark/20">
-              <div className="flex items-center gap-3 bg-white rounded-full p-2 border-2 border-luxury-dark/20">
-                <Search className="w-5 h-5 text-gray-400 ml-2" />
-                <Input
-                  type="text"
-                  placeholder="Search yachts..."
-                  className="flex-1 border-0 focus:ring-0 bg-transparent text-luxury-light text-base"
-                  autoFocus
-                />
-                <div className="flex items-center gap-2">
-                  <select className="bg-transparent border-0 text-luxury-dark text-sm font-semibold cursor-pointer outline-none">
-                    <option>SIZE</option>
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
-                  </select>
-                  <select className="bg-transparent border-0 text-luxury-dark text-sm font-semibold cursor-pointer outline-none">
-                    <option>PRICE</option>
-                    <option>$0-$1000</option>
-                    <option>$1000-$5000</option>
-                    <option>$5000+</option>
-                  </select>
-                  <select className="bg-transparent border-0 text-luxury-dark text-sm font-semibold cursor-pointer outline-none">
-                    <option>WHEN</option>
-                    <option>This Month</option>
-                    <option>Next Month</option>
-                    <option>Custom</option>
-                  </select>
-                </div>
-                <Button className="bg-luxury-dark text-white hover:bg-luxury-dark/90 uppercase font-bold px-6 py-2 rounded-full">
-                  Search
-                </Button>
-              </div>
-            </div>
-
-            {/* Contenido del menú */}
+            {/* Contenido del menú - Destinos en cuadrícula */}
             <div className="flex-1 overflow-y-auto p-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Resultados de búsqueda */}
-                <div className="md:col-span-2 space-y-4">
-                  <h3 className="text-lg font-bold text-luxury-dark uppercase mb-4">Results</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Resultado 1 */}
-                    <div className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-xl transition-shadow">
-                      <div className="aspect-video bg-gray-200"></div>
-                      <div className="p-4">
-                        <h4 className="font-bold text-luxury-dark text-lg mb-2">Yacht Name</h4>
-                        <p className="text-gray-600 text-sm">Description here</p>
+              <h3 className="text-xl font-bold text-luxury-dark uppercase mb-6 text-center">Destinos</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                {destinations.map((destination, index) => (
+                  <motion.div
+                    key={destination.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-300 group"
+                    onClick={() => {
+                      setIsSearchMenuOpen(false);
+                      // Scroll a la sección de destinos
+                      const destinosSection = document.getElementById('destinos');
+                      if (destinosSection) {
+                        destinosSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                  >
+                    {/* Imagen */}
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img
+                        src={destination.image}
+                        alt={destination.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="absolute bottom-2 left-2 right-2">
+                        <h4 className="text-sm md:text-base font-bold text-white mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                          {destination.name}
+                        </h4>
+                        {/* Features destacados */}
+                        <div className="flex flex-wrap gap-1">
+                          {destination.features.slice(0, 2).map((feature, i) => (
+                            <span
+                              key={i}
+                              className="px-2 py-0.5 text-[10px] font-bold text-white bg-black/70 backdrop-blur-md rounded-full border border-white/30"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                    {/* Resultado 2 */}
-                    <div className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-xl transition-shadow">
-                      <div className="aspect-video bg-gray-200"></div>
-                      <div className="p-4">
-                        <h4 className="font-bold text-luxury-dark text-lg mb-2">Yacht Name</h4>
-                        <p className="text-gray-600 text-sm">Description here</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Trending Searches */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-luxury-dark uppercase mb-4">Trending Searches</h3>
-                  <div className="space-y-2">
-                    {[
-                      "Special Offers",
-                      "Luxury Yachts",
-                      "Bahamas Charter",
-                      "Caribbean Yachts",
-                      "Where to Go"
-                    ].map((item, index) => (
-                      <button
-                        key={index}
-                        className="w-full text-left px-4 py-3 bg-white rounded-lg hover:bg-luxury-dark hover:text-white transition-colors text-luxury-dark font-semibold"
-                      >
-                        {item}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </motion.div>
