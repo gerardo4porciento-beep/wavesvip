@@ -48,7 +48,7 @@ export default function Header() {
               Contacto
             </Link>
             <a
-              href="https://wa.me/584127316397"
+              href="https://wa.me/584127316397?text=Hola%2C%20vengo%20de%20la%20web%20de%20Waves%2C%20estoy%20interesado%20en%20alquilar%20una%20lancha"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-luxury-gold transition-colors"
@@ -128,7 +128,7 @@ export default function Header() {
               </Link>
               <div className="flex items-center gap-4 pt-2">
                 <a
-                  href="https://wa.me/584127316397"
+                  href="https://wa.me/584127316397?text=Hola%2C%20vengo%20de%20la%20web%20de%20Waves%2C%20estoy%20interesado%20en%20alquilar%20una%20lancha"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white hover:text-luxury-gold transition-colors"

@@ -13,12 +13,12 @@ import CalendarAvailability from "@/components/CalendarAvailability";
 
 type Step = "guests" | "date" | "summary" | "availability" | "payment";
 
-// Tarifas por cantidad de personas (valores de ejemplo - el usuario proporcionará los reales)
+// Tarifas por cantidad de personas
 const PRICING: Record<number, number> = {
-  6: 1200,
-  8: 1500,
-  10: 1800,
-  12: 2000,
+  6: 220,
+  8: 280,
+  10: 320,
+  12: 350,
 };
 
 const GUEST_OPTIONS = [6, 8, 10, 12] as const;

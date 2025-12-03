@@ -106,7 +106,7 @@ export default function ContactSection() {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <Link
-                  href="https://wa.me/584127316397"
+                  href="https://wa.me/584127316397?text=Hola%2C%20vengo%20de%20la%20web%20de%20Waves%2C%20estoy%20interesado%20en%20alquilar%20una%20lancha"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 w-full bg-[#25D366] rounded-xl p-3 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group"

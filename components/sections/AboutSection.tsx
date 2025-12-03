@@ -45,7 +45,7 @@ export default function AboutSection() {
               icon: Sparkles,
               title: "Servicio Excepcional",
               description:
-                "Tripulación profesional dedicada a hacer de tu experiencia algo extraordinario, atendiendo cada detalle con excelencia.",
+                "Salida desde marina privada, estacionamiento privado, marinero incluido.",
             },
           ].map((feature, index) => (
             <motion.div
