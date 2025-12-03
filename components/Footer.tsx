@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-luxury-gold w-full relative overflow-hidden" style={{ padding: '0', margin: '0', marginBottom: '0', paddingBottom: '0', clipPath: 'inset(0 0 30px 0)' }}>
+    <footer className="bg-luxury-gold w-full relative overflow-hidden" style={{ padding: '0', margin: '0', marginBottom: '0', paddingBottom: '0', clipPath: 'inset(0 0 15px 0)' }}>
       {/* Letras grandes WAVES que ocupan todo el ancho */}
       <div className="w-full px-4 md:px-8" style={{ padding: '0', margin: '0', paddingBottom: '0', marginBottom: '0', paddingTop: '0', marginTop: '0' }}>
         <h1 
@@ -17,9 +17,9 @@ export default function Footer() {
             whiteSpace: 'nowrap',
             overflow: 'visible',
             display: 'block',
-            lineHeight: '0.7',
+            lineHeight: '0.75',
             margin: '0',
-            marginBottom: '-20px',
+            marginBottom: '0',
             padding: '0',
             paddingBottom: '0'
           }}
