@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ReservarPage() {
   return (
-    <div className="min-h-screen bg-background py-12 md:py-20">
+    <div className="min-h-screen bg-black py-12 md:py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Reserva tu Experiencia</h1>
