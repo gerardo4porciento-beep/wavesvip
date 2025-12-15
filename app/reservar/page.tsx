@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 
 export default function ReservarPage() {
   return (
-    <div className="min-h-screen bg-[#013220] flex flex-col">
-      {/* Header Simplificado para Reservas */}
-      <header className="py-6 px-6 md:px-12 flex items-center justify-between">
-        <Logo width={120} height={40} showText={false} />
+    <div className="min-h-screen bg-[#D4AF37] flex flex-col overflow-hidden">
+      {"/* Header Simplificado para Reservas */"}
+      <header className="py-4 px-6 md:px-12 flex items-center justify-between shrink-0">
+        <Logo width={100} height={32} showText={false} />
         <Link href="/">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-luxury-gold hover:bg-white/5 gap-2 uppercase text-xs tracking-widest"
+            className="text-black/80 hover:text-white hover:bg-black/5 gap-2 uppercase text-xs tracking-widest"
           >
             <ArrowLeft size={16} />
             Volver al Inicio
@@ -27,17 +27,8 @@ export default function ReservarPage() {
         </Link>
       </header>
 
-      <div className="flex-1 py-8 md:py-12">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10 space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2 font-display">
-              Reserva tu Experiencia
-            </h1>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto font-light">
-              Selecciona la capacidad que necesitas y verifica la disponibilidad en tiempo real.
-            </p>
-          </div>
-
+      <div className="flex-1 flex items-start justify-center pt-2 md:pt-4 px-4 overflow-y-auto">
+        <div className="w-full max-w-5xl">
           <BookingWizard />
         </div>
       </div>
