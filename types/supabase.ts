@@ -75,8 +75,23 @@ export interface Database {
           created_at: string;
           updated_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["bookings"]["Row"], "id" | "created_at" | "updated_at">;
-        Update: Partial<Database["public"]["Tables"]["bookings"]["Insert"]>;
+        Insert: {
+          vessel_id?: string | null;
+          user_id?: string | null;
+          customer_name: string;
+          customer_email: string;
+          customer_phone: string;
+          start_date: string;
+          end_date: string;
+          capacity: number;
+          total_price: number;
+          status: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";
+          payment_status?: "pending" | "processing" | "completed" | "failed";
+          payment_method?: "stripe" | "paypal" | "binance" | null;
+          payment_id?: string | null;
+          google_calendar_event_id?: string | null;
+          google_calendar_id?: string | null;
+        };
       };
       users: {
         Row: {
