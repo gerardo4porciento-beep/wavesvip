@@ -75,7 +75,7 @@ export function PaymentGateways({ selectedMethod, onSelectMethod, onFileUpload }
                 <p className="text-luxury-gold font-bold mb-2">Binance Pay (QR)</p>
                 <div className="bg-white p-2 rounded-lg">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/binance-qr.png" alt="Binance QR" className="w-48 h-48 object-contain" />
+                  <img src="/binance-qr.jpg" alt="Binance QR" className="w-48 h-48 object-contain" />
                 </div>
                 <p className="text-xs text-center mt-2 opacity-50">Escanea para pagar</p>
               </div>
