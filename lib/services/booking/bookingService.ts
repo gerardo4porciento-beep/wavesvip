@@ -15,7 +15,7 @@ export async function createBooking(data: {
   totalPrice: number;
   calendarId?: string | null;
 }): Promise<BookingRow> {
-  const supabase = createServerClient();
+  const supabase = createServerClient() as any;
 
   const insertData: BookingInsert = {
     customer_name: data.customerName,
@@ -81,7 +81,7 @@ export async function updateBookingStatus(
   bookingId: string,
   status: BookingRow["status"]
 ) {
-  const supabase = createServerClient();
+  const supabase = createServerClient() as any;
 
   const { error } = await supabase
     .from("bookings")
