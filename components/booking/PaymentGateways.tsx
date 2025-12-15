@@ -88,3 +88,4 @@ export function PaymentGateways({ selectedMethod, onSelectMethod, onFileUpload }
     </Tabs>
   );
 }
+

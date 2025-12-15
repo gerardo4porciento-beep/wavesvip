@@ -61,3 +61,4 @@ export function CapacitySelector({ selectedCapacity, onSelect }: CapacitySelecto
     </div>
   );
 }
+

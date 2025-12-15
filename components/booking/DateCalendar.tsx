@@ -74,3 +74,4 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
     </div>
   );
 }
+

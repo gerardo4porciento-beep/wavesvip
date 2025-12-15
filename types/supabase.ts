@@ -85,7 +85,7 @@ export interface Database {
           end_date: string;
           capacity: number;
           total_price: number;
-          status: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";
+          status?: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";
           payment_status?: "pending" | "processing" | "completed" | "failed";
           payment_method?: "stripe" | "paypal" | "binance" | null;
           payment_id?: string | null;
@@ -103,6 +103,23 @@ export interface Database {
         };
         Insert: Omit<Database["public"]["Tables"]["users"]["Row"], "id" | "created_at">;
         Update: Partial<Database["public"]["Tables"]["users"]["Insert"]>;
+      };
+      payments: {
+        Row: {
+          id: string;
+          booking_id: string;
+          amount: number;
+          provider: string;
+          status: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
+          created_at: string;
+        };
+        Insert: {
+          booking_id: string;
+          amount: number;
+          provider: string;
+          status?: "PENDING" | "PAID" | "FAILED" | "REFUNDED";
+        };
+        Update: Partial<Database["public"]["Tables"]["payments"]["Insert"]>;
       };
     };
   };
