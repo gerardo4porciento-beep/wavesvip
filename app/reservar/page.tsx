@@ -33,7 +33,7 @@ export default function ReservarPage() {
         </Link>
       </header>
 
-      <div className="relative z-10 flex-1 flex items-start justify-center pt-4 md:pt-8 px-4 overflow-y-auto pb-8">
+      <div className="relative z-10 flex-1 flex items-start justify-center pt-2 md:pt-0 px-4 overflow-y-auto pb-8">
         <div className="w-full max-w-5xl">
           <BookingWizard />
         </div>

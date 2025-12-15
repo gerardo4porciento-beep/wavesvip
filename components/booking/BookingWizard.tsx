@@ -83,25 +83,24 @@ export function BookingWizard() {
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8">
-      {/* Progress Indicator */}
-      <div className="flex justify-between mb-12 relative max-w-3xl mx-auto">
-        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-neutral-800 -z-10" />
-        {[1, 2, 3, 4].map((s) => (
-          <div
-            key={s}
-            className={cn(
-              "flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold border-2 transition-all duration-300 bg-black",
-              step >= s
-                ? "border-luxury-gold text-luxury-gold shadow-[0_0_15px_rgba(212,175,55,0.4)] scale-110"
-                : "border-neutral-700 text-neutral-600"
-            )}
-          >
-            {s}
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-6 md:p-12 shadow-2xl min-h-[600px] relative overflow-hidden">
+      <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-6 md:p-12 shadow-2xl min-h-[600px] relative overflow-hidden mt-4">
+        {/* Progress Indicator (Integrated) */}
+        <div className="flex justify-between mb-8 relative max-w-xl mx-auto">
+          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-neutral-800 -z-10" />
+          {[1, 2, 3, 4].map((s) => (
+            <div
+              key={s}
+              className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold border-2 transition-all duration-300 bg-black",
+                step >= s
+                  ? "border-luxury-gold text-luxury-gold shadow-[0_0_10px_rgba(212,175,55,0.4)]"
+                  : "border-neutral-700 text-neutral-600"
+              )}
+            >
+              {s}
+            </div>
+          ))}
+        </div>
         {/* Ambient Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-luxury-gold/5 blur-[120px] rounded-full pointer-events-none" />
 
