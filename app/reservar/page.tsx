@@ -20,7 +20,7 @@ export default function ReservarPage() {
         <div className="absolute inset-0 bg-black/40" /> {/* Overlay for readability */}
       </div>
 
-      <header className="relative z-10 py-4 px-6 md:px-12 flex items-center justify-between shrink-0">
+      <header className="relative z-10 py-2 px-6 md:px-12 flex items-center justify-between shrink-0 h-16">
         <Logo width={100} height={32} showText={false} />
         <Link href="/">
           <Button
