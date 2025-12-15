@@ -17,7 +17,13 @@ export async function createBooking(data: any) {
             capacity: data.capacity,
             total_price: data.totalPrice,
             status: "PENDING_PAYMENT",
-            google_calendar_id: data.calendarId
+            google_calendar_id: data.calendarId,
+            vessel_id: null,
+            user_id: null,
+            payment_method: null,
+            payment_status: "pending",
+            payment_id: null,
+            google_calendar_event_id: null
         }])
         .select()
         .single();
