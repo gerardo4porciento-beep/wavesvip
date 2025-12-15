@@ -37,7 +37,7 @@ export async function createBooking(data: {
 
   const { data: booking, error } = await supabase
     .from("bookings")
-    .insert<BookingInsert>(insertData)
+    .insert(insertData as BookingInsert)
     .select()
     .single();
 
@@ -64,7 +64,7 @@ export async function createPaymentRecord(data: {
 
   const { data: payment, error } = await supabase
     .from("payments")
-    .insert<PaymentInsert>(insertData)
+    .insert(insertData as PaymentInsert)
     .select()
     .single();
 
