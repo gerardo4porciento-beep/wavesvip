@@ -18,8 +18,8 @@ export async function POST(req: NextRequest) {
 
       console.log(`[Binance Webhook] Payment Success for Booking ${bookingId}`);
 
-      // 1. Update Booking Status
-      await updateBookingStatus(bookingId, "CONFIRMED");
+      // 1. Update Booking Status (usar valores válidos según tipos)
+      await updateBookingStatus(bookingId, "confirmed");
 
       // 2. Insert into Google Calendar
       // fetching booking details again would be needed here to get customer info
