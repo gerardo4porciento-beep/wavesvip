@@ -1,11 +1,12 @@
 
 import { createServerClient } from "@/lib/supabase/server";
 import { Booking, Payment } from "@/types";
+import { Database } from "@/types/supabase";
 
 // Initialize Supabase Client
 const supabase = createServerClient();
 
-export async function createBooking(data: any) {
+export async function createBooking(data: any): Promise<Database['public']['Tables']['bookings']['Row']> {
     const { data: booking, error } = await supabase
         .from("bookings")
         .insert([{
@@ -17,7 +18,7 @@ export async function createBooking(data: any) {
             capacity: data.capacity,
             total_price: data.totalPrice,
             status: "PENDING_PAYMENT",
-            google_calendar_id: data.calendarId,
+            google_calendar_id: data.calendarId ?? null,
             vessel_id: null,
             user_id: null,
             payment_method: null,
