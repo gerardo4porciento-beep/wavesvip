@@ -85,7 +85,8 @@ export async function updateBookingStatus(
 
   const { error } = await supabase
     .from("bookings")
-    .update({ status })
+    // Tipado relajado para evitar inferencia a never en build
+    .update({ status } as any)
     .eq("id", bookingId);
 
   if (error) throw new Error(error.message);
