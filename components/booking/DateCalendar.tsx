@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Loader2 } from "lucide-react";
 
@@ -9,47 +9,6 @@ interface DateCalendarProps {
   date: Date | undefined;
   onDateSelect: (date: Date) => void;
 }
-
-export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps) {
-  const [checking, setChecking] = useState(false);
-  const [blockedDates, setBlockedDates] = useState<Date[]>([]);
-
-  // Fetch blocked dates when capacity changes
-  useState(() => {
-    // Avoid double fetch in strict mode effect, using flag or simple logic
-    let active = true;
-
-    async function fetchBlockedDates() {
-      if (!capacity) return;
-      try {
-        const res = await fetch(`/api/booking/blocked-dates?capacity=${capacity}`);
-        const data = await res.json();
-        if (data.blockedDates && active) {
-          // blockedDates is ["YYYY-MM-DD", ...]
-          // We need to parse them to Date objects in local time to avoid timezone shifts visually
-          // Actually, best often to treat YYYY-MM-DD as T12:00:00 to be safe in middle of day
-          const dates = data.blockedDates.map((dateStr: string) => {
-            const [y, m, d] = dateStr.split("-").map(Number);
-            return new Date(y, m - 1, d); // Local time construction
-          });
-          setBlockedDates(dates);
-        }
-      } catch (e) {
-        console.error("Error fetching blocked dates", e);
-      }
-    }
-
-    fetchBlockedDates();
-    return () => { active = false; };
-  }, [capacity]); // Warning: useState initializer with effect logic is wrong. Use useEffect.
-
-  // Correct implementation with useEffect
-  import { useEffect } from "react";
-
-  // Re-write component body for clean replacement
-}
-
-import { useEffect } from "react";
 
 export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps) {
   const [checking, setChecking] = useState(false);
@@ -94,8 +53,6 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
       if (data.available) {
         onDateSelect(selectedDate);
       } else {
-        // Refresh blocked dates if check fails
-        // fetchBlockedDates(); // simplified
         alert("Esta fecha ya está reservada para día completo.");
       }
     } catch (e) {
@@ -142,4 +99,3 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
     </div>
   );
 }
-

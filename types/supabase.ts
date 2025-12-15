@@ -67,8 +67,8 @@ export interface Database {
           booking_date: string;
           capacity: number;
           total_price: number;
-          status: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";
-          payment_status: "pending" | "processing" | "completed" | "failed";
+          status: "PENDING_PAYMENT" | "PENDING_APPROVAL" | "CONFIRMED" | "CANCELLED" | "COMPLETED";
+          payment_status: "pending" | "processing" | "completed" | "failed"; // This might be separate enum
           payment_method: "stripe" | "paypal" | "binance" | null;
           payment_id: string | null;
           google_calendar_event_id: string | null;
@@ -87,7 +87,7 @@ export interface Database {
           booking_date: string;
           capacity: number;
           total_price: number;
-          status?: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";
+          status?: "PENDING_PAYMENT" | "PENDING_APPROVAL" | "CONFIRMED" | "CANCELLED" | "COMPLETED";
           payment_status?: "pending" | "processing" | "completed" | "failed";
           payment_method?: "stripe" | "paypal" | "binance" | null;
           payment_id?: string | null;

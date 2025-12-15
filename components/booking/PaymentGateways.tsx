@@ -69,9 +69,21 @@ export function PaymentGateways({ selectedMethod, onSelectMethod, onFileUpload }
         <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 space-y-6">
           <div>
             <h3 className="text-white font-display text-lg mb-2">Datos Bancarios</h3>
-            <div className="bg-black border border-neutral-800 p-4 rounded-xl text-sm text-neutral-400 font-mono space-y-2">
-              <p><span className="text-luxury-gold">Zelle:</span> payments@wavesvip.com</p>
-              <p><span className="text-luxury-gold">Pago Móvil:</span> 0414-0000000 • CI: 12345678 • Banco Mercantil</p>
+            <div className="bg-black border border-neutral-800 p-4 rounded-xl text-sm text-neutral-400 font-mono space-y-4">
+              {/* BINANCE QR SECTION */}
+              <div className="flex flex-col items-center justify-center p-4 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-luxury-gold font-bold mb-2">Binance Pay (QR)</p>
+                <div className="bg-white p-2 rounded-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/binance-qr.png" alt="Binance QR" className="w-48 h-48 object-contain" />
+                </div>
+                <p className="text-xs text-center mt-2 opacity-50">Escanea para pagar</p>
+              </div>
+
+              <div className="space-y-1">
+                <p><span className="text-luxury-gold">Zelle:</span> payments@wavesvip.com</p>
+                <p><span className="text-luxury-gold">Pago Móvil:</span> 0414-0000000 • CI: 12345678 • Banco Mercantil</p>
+              </div>
             </div>
           </div>
 

@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
       .select("id")
       .eq("capacity", capacity)
       .eq("booking_date", bookingDate)
-      .not("status", "in", "('cancelled','failed')") // Exclude cancelled
+      .not("status", "in", "('CANCELLED')") // Exclude cancelled
       .maybeSingle();
 
     if (error) {
