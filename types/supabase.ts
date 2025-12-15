@@ -11,6 +11,31 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      pending_reservations: {
+        Row: {
+          id: string;
+          capacity: number;
+          date: string;
+          name: string;
+          email: string;
+          phone: string;
+          total: number;
+          payment_type: "auto" | "manual";
+          payment_method: string;
+          payment_status: "pending" | "processing" | "confirmed" | "failed";
+          proof_url: string | null;
+          google_event_id: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Omit<
+          Database["public"]["Tables"]["pending_reservations"]["Row"],
+          "id" | "created_at" | "updated_at" | "google_event_id"
+        >;
+        Update: Partial<
+          Database["public"]["Tables"]["pending_reservations"]["Insert"]
+        >;
+      };
       vessels: {
         Row: {
           id: string;

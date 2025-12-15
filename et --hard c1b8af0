@@ -1,0 +1,50 @@
+[33md2f58ba[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Eliminar clase border-border inexistente que causaba error de compilación
+[33m5046f37[m Corregir error de sintaxis: mover Scroll Indicator dentro de la sección correcta
+[33m74f443c[m Eliminar espacio blanco debajo del footer: agregar márgenes y padding 0 en html, body, main y footer
+[33mc1b8af0[m Eliminar espacio blanco debajo del footer y ocultar barras de scroll
+[33mdd0243d[m Eliminar espacio inferior del footer: reducir line-height y asegurar que WAVES termine al final del landing
+[33mc6f6389[m Reducir grosor de tipografía WAVES: cambiar de fontWeight 900 a 600 para texto más delgado
+[33mbc4f742[m Revertir cambios: restaurar footer con letras WAVES completas sin cortar
+[33m8c9e15f[m Ajustar footer: letras WAVES blancas cortadas por arriba y abajo, mostrando solo parte media
+[33m89c9b4c[m Revertir cambios: eliminar clip-path y restaurar valores originales del footer
+[33m1b160c2[m Cortar letras WAVES por debajo usando clip-path y reducir line-height para eliminar espacio inferior
+[33m2d6bf87[m Eliminar todos los márgenes y paddings para que WAVES termine completamente al ras
+[33mcea7111[m Eliminar todo el espacio inferior del footer para que WAVES termine al ras
+[33ma246fb7[m Actualizar cambios pendientes
+[33m9fb69d3[m Eliminar botones y enlaces del footer, reducir padding superior para pegar WAVES más cerca de contacto
+[33m69d7054[m Reducir padding superior del footer para acercar WAVES a la sección de contacto
+[33m88d250c[m Eliminar formulario de contacto y reorganizar información junto a botones de redes sociales en diseño compacto
+[33m020ca43[m Ajustar footer para que WAVES se vea completo: reducir tamaño y quitar overflow que cortaba texto
+[33m199a22b[m Mover footer cerca de contacto, cambiar a solo WAVES y hacer letras gigantes que ocupen todo el ancho
+[33m399c490[m Actualizar footer: usar color luxury-gold de contacto y fuente sans-serif condensada similar a Y.CO
+[33m675a3cd[m Rediseñar footer con estilo minimalista: fondo amarillo, letras grandes WAVES VIP y enlaces sociales
+[33m30aad1a[m Actualizar documentacion y cambios pendientes
+[33m28f686d[m Reducir espacio debajo del copyright en version movil
+[33md3be59b[m Hacer contenedor de copyright mas delgado y texto en negrita en version movil
+[33mde9c90f[m Agregar copyright sutil al final de la version movil
+[33mc287c2f[m Agregar WhatsApp e Instagram al menú Header y mejorar diseño elegante de sección Experiencia
+[33m46539fb[m Mejorar legibilidad de nombres y etiquetas sobre imágenes de cayos: cambiar a blanco con mejor contraste
+[33m9569426[m Agregar fondo verde claro a la sección Destinos
+[33mbea9038[m Separar texto VIVE LA EXPERIENCIA en dos líneas en versión web
+[33m42ded8d[m Cambiar texto TRUE VIBES por VIVE LA EXPERIENCIA
+[33md977577[m Ajustar video para cubrir completamente el notch en iPhone usando safe-area-insets
+[33m857146e[m Fix: eliminar propiedad height duplicada en HeroVideo
+[33m6d20019[m Agregar botones de redes sociales en contacto desktop y ajustar video para iPhone notch
+[33m7894d5b[m Aplicar fondos (azul en Experiencia, amarillo en Contacto) y eliminar galería en versión web
+[33m477576a[m Cambiar fondo de sección Contacto a amarillo dorado
+[33ma8317b8[m Intensificar el azul de fondo en la sección Experiencia
+[33m780980a[m Ajustar colores de texto, espaciado de secciones y fondo azul claro en Experiencia
+[33mc689eb3[m Eliminar degradados blancos del video y usar colores sólidos intensos (negro)
+[33m8bbe528[m Cambiar texto de typewriter: Yate de lujo en Morrocoy -> Lanchas deportivas en Tucacas
+[33mab9f526[m Actualizar enlaces de contacto y restaurar diseño original de sección Experiencia
+[33m0ebe210[m Mejorar diseño con colores del logo, rediseñar sección de contacto móvil y agregar favicon
+[33mf8ab95c[m Asegurar orden correcto de secciones: Destinos antes de Experiencia Waves
+[33mdead906[m Agregar Bajo 360 a la lista de destinos
+[33m3d8d923[m Quitar texto WAVES VIP del logo, actualizar typewriter con ejemplos de búsqueda en mayúsculas y negrita, y cambiar ícono menú a dorado
+[33m9961492[m Agregar efecto typewriter en barra de búsqueda, hacer barra transparente, cambiar lupa a dorado, y cache-busting para videos
+[33mf80d7bd[m Quitar sombra de TRUE VIBES, apilar texto en móvil y ocultar botón Search en móvil
+[33m98bb27a[m Agregar sección Destinos con todos los cayos y bajos del Parque Nacional Morrocoy con nombres completos visibles
+[33m739ea5b[m Agregar barra de búsqueda con hover y texto Amazing Awaits, actualizar Header con Helvetica y mejoras de diseño
+[33m6aba62f[m Corregir error de build: eliminar clase border-border no definida
+[33m7eaf88e[m Eliminar iconos de scroll, audio y pausa
+[33ma49909e[m Mejorar calidad del video: solucionar pixelado con q_90 y dpr_auto, optimizar CSS de renderizado

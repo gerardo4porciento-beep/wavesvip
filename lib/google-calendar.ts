@@ -4,10 +4,14 @@ import type { Vessel, Booking } from "@/types";
 /**
  * Configuración y autenticación con Google Calendar usando Service Account
  */
-export function getGoogleCalendarAuth() {
+/**
+ * Configuración y autenticación con Google Calendar usando Service Account
+ */
+export function getGoogleCalendarAuth(calendarIdOverride?: string) {
   const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const calendarId = process.env.GOOGLE_CALENDAR_ID;
+  // Use the override if provided, otherwise fall back to the env var
+  const calendarId = calendarIdOverride || process.env.GOOGLE_CALENDAR_ID;
 
   if (!privateKey || !clientEmail || !calendarId) {
     throw new Error(
@@ -115,8 +119,9 @@ ID de Pago: ${params.booking.paymentId || "N/A"}
 export async function getCalendarAvailability(params: {
   startDate: string;
   endDate: string;
+  calendarId?: string; // Add optional calendarId
 }): Promise<{ date: string; available: boolean; bookingId?: string }[]> {
-  const { jwtClient, calendarId } = getGoogleCalendarAuth();
+  const { jwtClient, calendarId } = getGoogleCalendarAuth(params.calendarId); // Pass it here
   const calendar = google.calendar({ version: "v3", auth: jwtClient });
 
   try {

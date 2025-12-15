@@ -102,7 +102,7 @@ export default function DestinationsSection() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute bottom-2 left-4 right-4">
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.8)' }}>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
                     {destination.name}
                   </h3>
                   {/* Features destacados */}
