@@ -1,14 +1,9 @@
 
-import { createClient } from "@supabase/supabase-js";
-import { Booking, Payment } from "@/types"; // You might need to update types if they don't match schema exactly
+import { createServerClient } from "@/lib/supabase/server";
+import { Booking, Payment } from "@/types";
 
 // Initialize Supabase Client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!; // Use Service Role for backend ops ideally, but anon for client side
-// For backend generic ops, we might want SERVICE_ROLE if we have RLS enabled and need admin access.
-// Let's assume standard client for now or Service Role if available in future.
-
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createServerClient();
 
 export async function createBooking(data: any) {
     const { data: booking, error } = await supabase

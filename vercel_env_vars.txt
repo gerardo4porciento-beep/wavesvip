@@ -1,0 +1,29 @@
+
+===================================================================
+ INSTRUCCIONES PARA VERCEL (COPIA Y PEGA)
+===================================================================
+
+Agrega estas variables en: Settings -> Environment Variables
+
+1. NEXT_PUBLIC_SUPABASE_URL
+   Valor: https://gpbxrwhdoctqivzbddwz.supabase.co
+
+2. NEXT_PUBLIC_SUPABASE_ANON_KEY
+   Valor: sb_publishable_DB3Hv_OHhdZGlCnsn9tzVA_Duyxedoe
+
+3. SUPABASE_SERVICE_ROLE_KEY
+   Valor: sb_secret_Q_bKcTM9lb7K7z_SXn2RVg_AW7gNH1B
+
+4. GOOGLE_CALENDAR_ID
+   Valor: wavesvip@waves-vip.iam.gserviceaccount.com
+
+5. GOOGLE_SERVICE_ACCOUNT_EMAIL
+   Valor: wavesvip@waves-vip.iam.gserviceaccount.com
+
+6. GOOGLE_PRIVATE_KEY
+   ⚠️ IMPORTANTE: El valor es muy largo. Copialo DIRECTAMENTE de tu archivo .env.local
+   
+   Busca la línea que empieza por: GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----
+   Y copia TODO lo que está dentro de las comillas, incluyendo los saltos de línea (\n).
+
+===================================================================
