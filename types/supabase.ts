@@ -64,6 +64,7 @@ export interface Database {
           customer_phone: string;
           start_date: string;
           end_date: string;
+          booking_date: string;
           capacity: number;
           total_price: number;
           status: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";
@@ -83,6 +84,7 @@ export interface Database {
           customer_phone: string;
           start_date: string;
           end_date: string;
+          booking_date: string;
           capacity: number;
           total_price: number;
           status?: "PENDING_PAYMENT" | "PAID" | "pending" | "confirmed" | "completed" | "cancelled";

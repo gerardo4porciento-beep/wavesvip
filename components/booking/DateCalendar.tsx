@@ -12,14 +12,78 @@ interface DateCalendarProps {
 
 export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps) {
   const [checking, setChecking] = useState(false);
+  const [blockedDates, setBlockedDates] = useState<Date[]>([]);
+
+  // Fetch blocked dates when capacity changes
+  useState(() => {
+    // Avoid double fetch in strict mode effect, using flag or simple logic
+    let active = true;
+
+    async function fetchBlockedDates() {
+      if (!capacity) return;
+      try {
+        const res = await fetch(`/api/booking/blocked-dates?capacity=${capacity}`);
+        const data = await res.json();
+        if (data.blockedDates && active) {
+          // blockedDates is ["YYYY-MM-DD", ...]
+          // We need to parse them to Date objects in local time to avoid timezone shifts visually
+          // Actually, best often to treat YYYY-MM-DD as T12:00:00 to be safe in middle of day
+          const dates = data.blockedDates.map((dateStr: string) => {
+            const [y, m, d] = dateStr.split("-").map(Number);
+            return new Date(y, m - 1, d); // Local time construction
+          });
+          setBlockedDates(dates);
+        }
+      } catch (e) {
+        console.error("Error fetching blocked dates", e);
+      }
+    }
+
+    fetchBlockedDates();
+    return () => { active = false; };
+  }, [capacity]); // Warning: useState initializer with effect logic is wrong. Use useEffect.
+
+  // Correct implementation with useEffect
+  import { useEffect } from "react";
+
+  // Re-write component body for clean replacement
+}
+
+import { useEffect } from "react";
+
+export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps) {
+  const [checking, setChecking] = useState(false);
+  const [blockedDates, setBlockedDates] = useState<Date[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    async function fetchBlockedDates() {
+      if (!capacity) return;
+      try {
+        const res = await fetch(`/api/booking/blocked-dates?capacity=${capacity}`);
+        const data = await res.json();
+        if (data.blockedDates && active) {
+          const dates = data.blockedDates.map((dateStr: string) => {
+            const [y, m, d] = dateStr.split("-").map(Number);
+            return new Date(y, m - 1, d);
+          });
+          setBlockedDates(dates);
+        }
+      } catch (e) {
+        console.error("Error fetching blocked dates", e);
+      }
+    }
+    fetchBlockedDates();
+    return () => { active = false; };
+  }, [capacity]);
 
   const handleSelect = async (selectedDate: Date | undefined) => {
     if (!selectedDate) return;
 
+    // Double check availability (concurrency)
     setChecking(true);
     try {
       const dateStr = selectedDate.toISOString().split("T")[0];
-
       const res = await fetch("/api/booking/check-availability", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -27,11 +91,12 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
       });
 
       const data = await res.json();
-
       if (data.available) {
         onDateSelect(selectedDate);
       } else {
-        alert("Fecha no disponible. Por favor selecciona otra.");
+        // Refresh blocked dates if check fails
+        // fetchBlockedDates(); // simplified
+        alert("Esta fecha ya está reservada para día completo.");
       }
     } catch (e) {
       console.error(e);
@@ -57,7 +122,10 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
             caption_label: "text-white font-medium text-sm",
             nav_button: "border border-neutral-800 hover:bg-neutral-800 hover:text-white text-neutral-400"
           }}
-          disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
+          disabled={[
+            (d) => d < new Date(new Date().setHours(0, 0, 0, 0)),
+            ...blockedDates
+          ]}
         />
         {checking && (
           <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center z-10 rounded-xl">

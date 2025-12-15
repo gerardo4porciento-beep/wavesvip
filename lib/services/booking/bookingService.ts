@@ -21,12 +21,13 @@ export async function createBooking(data: {
     customer_name: data.customerName,
     customer_email: data.customerEmail,
     customer_phone: data.customerPhone,
-    start_date: data.startDate,
+    start_date: data.startDate, // ISO string likely
     end_date: data.endDate,
+    booking_date: data.startDate.split("T")[0], // Normalize to YYYY-MM-DD for uniqueness
     capacity: data.capacity,
     total_price: data.totalPrice,
     status: "PENDING_PAYMENT" as const,
-    google_calendar_id: data.calendarId ?? null,
+    google_calendar_id: null, // Legacy field kept null
     vessel_id: null,
     user_id: null,
     payment_method: null,
@@ -35,9 +36,10 @@ export async function createBooking(data: {
     google_calendar_event_id: null,
   };
 
+  // We rely on the UNIQUE INDEX (capacity, booking_date) to prevent double bookings.
+  // If a booking exists, this insert will fail with a constraint violation.
   const { data: booking, error } = await supabase
     .from("bookings")
-    // Nota: tipado relajado para evitar errores de inferencia en build
     .insert(insertData as any)
     .select()
     .single();
