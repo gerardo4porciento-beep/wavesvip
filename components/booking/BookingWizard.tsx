@@ -211,7 +211,7 @@ export function BookingWizard() {
             </div>
             <h2 className="text-5xl font-display text-white">¡Reserva <span className="text-green-500">Confirmada!</span></h2>
             <p className="text-neutral-400 text-xl max-w-lg mx-auto leading-relaxed">
-              Hemos enviado los detalles a <b>{customerEmail}</b>.<br />
+              Hemos enviado los detalles a <b>{bookingData.customerEmail}</b>.<br />
               Tu aventura VIP está lista para comenzar.
             </p>
 
