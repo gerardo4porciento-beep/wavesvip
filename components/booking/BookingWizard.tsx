@@ -89,7 +89,7 @@ export function BookingWizard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-1 h-full flex flex-col justify-start pt-2">
+    <div className="w-full mx-auto p-1 h-full flex flex-col justify-start pt-2">
       <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-3 md:p-6 shadow-2xl relative overflow-hidden mt-0 w-full">
         {/* Progress Indicator (Integrated) - Compact */}
         <div className="flex justify-between mb-2 relative max-w-md mx-auto scale-75 origin-top">
