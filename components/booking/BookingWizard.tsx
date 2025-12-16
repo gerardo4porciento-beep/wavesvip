@@ -82,10 +82,10 @@ export function BookingWizard() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8">
-      <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-6 md:p-12 shadow-2xl min-h-[600px] relative overflow-hidden mt-0">
-        {/* Progress Indicator (Integrated) */}
-        <div className="flex justify-between mb-8 relative max-w-xl mx-auto">
+    <div className="max-w-7xl mx-auto p-1 md:p-2 h-full flex flex-col justify-center">
+      <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-4 md:p-8 shadow-2xl relative overflow-hidden mt-0 w-full">
+        {/* Progress Indicator (Integrated) - Compact */}
+        <div className="flex justify-between mb-4 relative max-w-md mx-auto scale-90">
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-neutral-800 -z-10" />
           {[1, 2, 3, 4].map((s) => (
             <div
