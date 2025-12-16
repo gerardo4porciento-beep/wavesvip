@@ -19,13 +19,19 @@ export function BookingWizard() {
   const [step, setStep] = useState<Step>(1);
 
   // State
-  const [capacity, setCapacity] = useState<number | null>(null);
-  const [date, setDate] = useState<Date | undefined>(undefined);
-
-  // Custom Form Data (Using state for simplicity in this replacement)
-  const [customerName, setCustomerName] = useState("");
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
+  const [bookingData, setBookingData] = useState<{
+    capacity: number | null;
+    date: Date | undefined;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+  }>({
+    capacity: null,
+    date: undefined,
+    customerName: "",
+    customerEmail: "",
+    customerPhone: "",
+  });
 
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.BINANCE);
   const [receiptUrl, setReceiptUrl] = useState<string | null>(null);
@@ -34,16 +40,16 @@ export function BookingWizard() {
 
   // Handlers
   const handleCapacitySelect = (cap: number) => {
-    setCapacity(cap);
+    setBookingData((prev) => ({ ...prev, capacity: cap }));
     setStep(2);
   };
 
   const handleDateSelect = (d: Date | undefined) => {
-    if (d) setDate(d);
+    if (d) setBookingData((prev) => ({ ...prev, date: d }));
   };
 
   const handlePayment = async () => {
-    if (!capacity || !date || !customerName || !customerEmail) {
+    if (!bookingData.capacity || !bookingData.date || !bookingData.customerName || !bookingData.customerEmail) {
       toast.error("Por favor completa todos los campos requeridos.");
       return;
     }
@@ -54,11 +60,11 @@ export function BookingWizard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          customer: { name: customerName, email: customerEmail, phone: customerPhone },
+          customer: { name: bookingData.customerName, email: bookingData.customerEmail, phone: bookingData.customerPhone },
           details: {
-            capacity,
-            startDate: date.toISOString(),
-            endDate: date.toISOString(),
+            capacity: bookingData.capacity,
+            startDate: bookingData.date.toISOString(),
+            endDate: bookingData.date.toISOString(),
             totalPrice: 1000,
           },
           payment: {
