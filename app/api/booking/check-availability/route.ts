@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       console.error("Db Check Error", error);
-      return NextResponse.json({ error: "Database error" }, { status: 500 });
+      return NextResponse.json({ error: `DB Error: ${error.message} (Code: ${error.code})` }, { status: 500 });
     }
 
     // If data exists, it IS booked (not available)
