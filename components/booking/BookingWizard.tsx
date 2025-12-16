@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { PaymentMethod } from "@/lib/services/payment/types";
 
