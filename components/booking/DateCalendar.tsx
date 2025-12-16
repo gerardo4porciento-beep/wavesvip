@@ -50,6 +50,12 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
       });
 
       const data = await res.json();
+
+      if (data.error) {
+        alert(`Error del Sistema: ${data.error}`);
+        return;
+      }
+
       if (data.available) {
         onDateSelect(selectedDate);
       } else {
