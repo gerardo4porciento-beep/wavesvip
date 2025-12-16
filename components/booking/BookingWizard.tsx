@@ -82,10 +82,10 @@ export function BookingWizard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-1 md:p-2 h-full flex flex-col justify-center">
-      <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-4 md:p-8 shadow-2xl relative overflow-hidden mt-0 w-full">
+    <div className="max-w-7xl mx-auto p-1 h-full flex flex-col justify-start pt-2">
+      <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-3 md:p-6 shadow-2xl relative overflow-hidden mt-0 w-full">
         {/* Progress Indicator (Integrated) - Compact */}
-        <div className="flex justify-between mb-4 relative max-w-md mx-auto scale-90">
+        <div className="flex justify-between mb-2 relative max-w-md mx-auto scale-75 origin-top">
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-neutral-800 -z-10" />
           {[1, 2, 3, 4].map((s) => (
             <div
@@ -105,77 +105,62 @@ export function BookingWizard() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-luxury-gold/5 blur-[120px] rounded-full pointer-events-none" />
 
         {step === 1 && (
-          <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h2 className="text-4xl md:text-5xl text-center font-display text-white">
-              Selecciona tu <span className="text-luxury-gold">Experiencia</span>
-            </h2>
-            <CapacitySelector selectedCapacity={capacity} onSelect={handleCapacitySelect} />
+          <div className="animate-in slide-in-from-right duration-500">
+            <CapacitySelector selectedCapacity={bookingData.capacity} onSelect={handleCapacitySelect} />
           </div>
         )}
 
         {step === 2 && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <Button variant="ghost" onClick={() => setStep(1)} className="text-neutral-400 hover:text-white pl-0">
-              <ArrowLeft className="w-5 h-5 mr-2" /> Volver
-            </Button>
-
-            <h2 className="text-3xl md:text-4xl text-center font-display text-white mb-8">
+          <div className="animate-in slide-in-from-right duration-500 flex flex-col h-full">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-center text-white mb-2 md:mb-4">
               Elige tu <span className="text-luxury-gold">Fecha</span>
             </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+              <DateCalendar
+                capacity={bookingData.capacity!}
+                date={bookingData.date}
+                onDateSelect={(d) => setBookingData(prev => ({ ...prev, date: d }))}
+              />
 
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="bg-neutral-900/50 p-6 rounded-2xl border border-neutral-800 flex justify-center">
-                <DateCalendar
-                  date={date}
-                  onDateSelect={handleDateSelect}
-                  capacity={capacity || 0}
-                />
-              </div>
-
-              <div className="space-y-8">
-                <div className="bg-neutral-900/30 p-8 rounded-2xl border border-neutral-800 space-y-6">
-                  <h3 className="text-xl text-luxury-gold font-display">Tus Datos</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <Label className="text-neutral-400 mb-2 block">Nombre Completo</Label>
-                      <input
-                        placeholder="Tu nombre"
-                        className="w-full bg-black border border-neutral-700 rounded-xl px-4 py-3 text-white focus:border-luxury-gold focus:outline-none transition-colors placeholder:text-neutral-700"
-                        value={customerName}
-                        onChange={(e) => setCustomerName(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-neutral-400 mb-2 block">Email</Label>
-                      <input
-                        type="email"
-                        placeholder="tucorreo@ejemplo.com"
-                        className="w-full bg-black border border-neutral-700 rounded-xl px-4 py-3 text-white focus:border-luxury-gold focus:outline-none transition-colors placeholder:text-neutral-700"
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-neutral-400 mb-2 block">Teléfono</Label>
-                      <input
-                        placeholder="+58..."
-                        className="w-full bg-black border border-neutral-700 rounded-xl px-4 py-3 text-white focus:border-luxury-gold focus:outline-none transition-colors placeholder:text-neutral-700"
-                        value={customerPhone}
-                        onChange={(e) => setCustomerPhone(e.target.value)}
-                      />
-                    </div>
+              <div className="space-y-3 bg-neutral-900/50 p-4 rounded-2xl border border-neutral-800">
+                <h3 className="text-luxury-gold font-display text-lg mb-1">Tus Datos</h3>
+                <div className="space-y-2">
+                  <div>
+                    <Label className="text-xs text-neutral-400">Nombre Completo</Label>
+                    <Input
+                      placeholder="Tu nombre"
+                      className="bg-black border-neutral-800 h-9 text-sm"
+                      value={bookingData.customerName}
+                      onChange={(e) => setBookingData({ ...bookingData, customerName: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-xs text-neutral-400">Email</Label>
+                    <Input
+                      placeholder="tucorreo@ejemplo.com"
+                      className="bg-black border-neutral-800 h-9 text-sm"
+                      value={bookingData.customerEmail}
+                      onChange={(e) => setBookingData({ ...bookingData, customerEmail: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-xs text-neutral-400">Teléfono</Label>
+                    <Input
+                      placeholder="+58..."
+                      className="bg-black border-neutral-800 h-9 text-sm"
+                      value={bookingData.customerPhone}
+                      onChange={(e) => setBookingData({ ...bookingData, customerPhone: e.target.value })}
+                    />
                   </div>
                 </div>
 
-                <div className="flex justify-end">
-                  <Button
-                    onClick={() => setStep(3)}
-                    disabled={!customerName || !customerEmail || !date}
-                    className="bg-luxury-gold text-black hover:bg-white hover:text-black font-bold text-lg px-8 py-6 rounded-full w-full transition-all duration-300"
-                  >
-                    Continuar
-                  </Button>
-                </div>
+                <Button
+                  className="w-full bg-luxury-gold text-black hover:bg-yellow-500 font-bold mt-2"
+                  disabled={!bookingData.date || !bookingData.customerName || !bookingData.customerEmail || !bookingData.customerPhone}
+                  onClick={() => setStep(3)}
+                >
+                  Continuar
+                </Button>
               </div>
             </div>
           </div>

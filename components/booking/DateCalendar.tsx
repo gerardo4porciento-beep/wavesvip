@@ -71,7 +71,7 @@ export function DateCalendar({ capacity, date, onDateSelect }: DateCalendarProps
 
   return (
     <div className="flex flex-col items-center w-full">
-      <div className="relative p-2 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl w-full max-w-[320px] mx-auto">
+      <div className="relative p-3 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl w-full max-w-sm mx-auto">
         <style jsx global>{`
           .rdp { --rdp-cell-size: 32px; --rdp-accent-color: #D4AF37; --rdp-background-color: #D4AF37; margin: 0; }
           .rdp-day_selected:not([disabled]) { 
