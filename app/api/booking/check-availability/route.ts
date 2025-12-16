@@ -34,12 +34,12 @@ export async function POST(req: NextRequest) {
       .select("id")
       .eq("capacity", capacity)
       .eq("booking_date", bookingDate)
-      .not("status", "in", "('CANCELLED')") // Exclude cancelled
+      .neq("status", "CANCELLED") // Exclude cancelled
       .maybeSingle();
 
     if (error) {
       console.error("Db Check Error", error);
-      return NextResponse.json({ error: `DB Error: ${error.message} (Code: ${error.code})` }, { status: 500 });
+      return NextResponse.json({ error: `DB Error (v2): ${error.message} (Code: ${error.code})` }, { status: 500 });
     }
 
     // If data exists, it IS booked (not available)
