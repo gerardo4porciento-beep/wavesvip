@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
             .from("bookings")
             .select("booking_date")
             .eq("capacity", Number(capacity))
-            .not("status", "in", "('CANCELLED')");
+            .neq("status", "CANCELLED");
 
         if (month) {
             query = query.like("booking_date", `${month}%`);
