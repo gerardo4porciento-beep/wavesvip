@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CapacitySelector } from "./CapacitySelector";
 import { DateCalendar } from "./DateCalendar";
 import { PaymentGateways } from "./PaymentGateways";
+import { WavesBranding } from "./WavesBranding";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
@@ -230,6 +231,9 @@ export function BookingWizard() {
             </div>
           </div>
         )}
+
+        {/* Branding Footer */}
+        <WavesBranding />
       </div>
     </div>
   );
