@@ -10,9 +10,9 @@ function cleanEnvVar(value: string | undefined) {
 }
 
 if (!admin.apps.length) {
-    const projectId = cleanEnvVar(process.env.FIREBASE_PROJECT_ID);
-    const clientEmail = cleanEnvVar(process.env.FIREBASE_CLIENT_EMAIL);
-    const rawPrivateKey = cleanEnvVar(process.env.FIREBASE_PRIVATE_KEY);
+    const projectId = cleanEnvVar(process.env.FIREBASE_PROJECT_ID) || 'wavesvip-962d8';
+    const clientEmail = cleanEnvVar(process.env.FIREBASE_CLIENT_EMAIL) || cleanEnvVar(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
+    const rawPrivateKey = cleanEnvVar(process.env.FIREBASE_PRIVATE_KEY) || cleanEnvVar(process.env.GOOGLE_PRIVATE_KEY);
 
     // Debug info (safe to log first chars)
     console.log("Checking Firebase Config:");
