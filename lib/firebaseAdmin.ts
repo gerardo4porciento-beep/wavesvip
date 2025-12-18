@@ -1,16 +1,17 @@
 import * as admin from 'firebase-admin';
 
 if (!admin.apps.length) {
-    // Only try to initialize if we have the required environment variables
-    // This prevents build-time errors when env vars might be missing
-    if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
+    const projectId = process.env.FIREBASE_PROJECT_ID;
+    const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+    const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+
+    if (projectId && clientEmail && privateKey) {
         try {
             admin.initializeApp({
                 credential: admin.credential.cert({
-                    projectId: process.env.FIREBASE_PROJECT_ID,
-                    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-                    // Replace escaped newlines if they exist in the env var
-                    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+                    projectId,
+                    clientEmail,
+                    privateKey: privateKey.replace(/\\n/g, '\n'),
                 }),
             });
             console.log('Firebase Admin Initialized successfully');
@@ -18,7 +19,10 @@ if (!admin.apps.length) {
             console.error('Firebase Admin Initialization error', error);
         }
     } else {
-        console.warn('Firebase Admin skipped initialization: Missing environment variables');
+        console.warn('Firebase Admin skipped initialization. Missing vars:');
+        if (!projectId) console.warn('- FIREBASE_PROJECT_ID is missing');
+        if (!clientEmail) console.warn('- FIREBASE_CLIENT_EMAIL is missing');
+        if (!privateKey) console.warn('- FIREBASE_PRIVATE_KEY is missing');
     }
 }
 
