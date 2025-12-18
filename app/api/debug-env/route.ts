@@ -13,10 +13,21 @@ export async function GET() {
         privateKey: process.env.FIREBASE_PRIVATE_KEY ? 'PRESENT' : 'MISSING',
     };
 
+    const googleVars = {
+        serviceAccountEmail: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || 'MISSING',
+    };
+
+    const activeConfig = {
+        projectId: process.env.FIREBASE_PROJECT_ID || 'wavesvip-962d8',
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || 'MISSING',
+    };
+
     return NextResponse.json({
         message: "Environment Variable Debug",
         firebaseVars,
-        allKeys: envKeys,
+        googleVars,
+        activeConfig, // This will show the actual email being used
+        // allKeys: envKeys, // Removing full key list to reduce noise
         nodeEnv: process.env.NODE_ENV
     });
 }
