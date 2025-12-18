@@ -16,9 +16,10 @@ if (!admin.apps.length) {
 
     // Debug info (safe to log first chars)
     console.log("Checking Firebase Config:");
-    console.log(`- Project ID: ${projectId ? projectId.substring(0, 5) + '...' : 'MISSING'}`);
+    console.log("Available Env Keys:", Object.keys(process.env).filter(k => k.startsWith('FIREBASE') || k.startsWith('NEXT_PUBLIC')));
+    console.log(`- Project ID: ${projectId ? projectId.substring(0, 5) + '...' : 'MISSING (Type: ' + typeof process.env.FIREBASE_PROJECT_ID + ')'}`);
     console.log(`- Client Email: ${clientEmail ? clientEmail.substring(0, 5) + '...' : 'MISSING'}`);
-    console.log(`- Private Key: ${rawPrivateKey ? 'Present (starts with ' + rawPrivateKey.substring(0, 10) + '...)' : 'MISSING'}`);
+    console.log(`- Private Key: ${rawPrivateKey ? 'Present (Length: ' + rawPrivateKey.length + ')' : 'MISSING'}`);
 
     if (projectId && clientEmail && rawPrivateKey) {
         try {
