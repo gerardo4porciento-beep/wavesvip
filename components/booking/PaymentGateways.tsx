@@ -19,8 +19,8 @@ export function PaymentGateways({ selectedMethod, onSelectMethod, onFileUpload }
   const [tab, setTab] = useState<"auto" | "manual">("auto");
 
   return (
-    <Tabs defaultValue="auto" className="w-full" onValueChange={(v) => setTab(v as any)}>
-      <TabsList className="grid w-full grid-cols-2 bg-neutral-900 border border-neutral-800 p-1 rounded-xl mb-6">
+    <Tabs defaultValue="manual" className="w-full" onValueChange={(v) => setTab(v as any)}>
+      <TabsList className="hidden grid w-full grid-cols-2 bg-neutral-900 border border-neutral-800 p-1 rounded-xl mb-6">
         <TabsTrigger
           value="auto"
           className="data-[state=active]:bg-luxury-gold data-[state=active]:text-black text-neutral-400 font-medium rounded-lg transition-all"
@@ -66,38 +66,45 @@ export function PaymentGateways({ selectedMethod, onSelectMethod, onFileUpload }
       </TabsContent>
 
       <TabsContent value="manual">
-        <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 space-y-6">
-          <div>
-            <h3 className="text-white font-display text-lg mb-2">Datos Bancarios</h3>
-            <div className="bg-black border border-neutral-800 p-4 rounded-xl text-sm text-neutral-400 font-mono space-y-4">
-              {/* BINANCE QR SECTION */}
-              <div className="flex flex-col items-center justify-center p-4 bg-white/5 rounded-lg border border-white/10">
-                <p className="text-luxury-gold font-bold mb-2">Binance Pay (QR)</p>
-                <div className="bg-white p-4 rounded-xl">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/binance-qr.jpg" alt="Binance QR" className="w-[300px] h-[300px] object-contain" />
+        <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            {/* Left Col: QR */}
+            <div>
+              <h3 className="text-white font-display text-sm mb-2 text-center md:text-left">Datos Bancarios</h3>
+              <div className="bg-black border border-neutral-800 p-2 rounded-xl flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
+                  <div className="bg-white p-2 rounded-lg">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/binance-qr.jpg" alt="Binance QR" className="w-[300px] h-[300px] object-contain" />
+                  </div>
+                  <p className="text-[10px] text-center mt-1 opacity-50 text-neutral-500">Escanea para pagar</p>
                 </div>
-                <p className="text-xs text-center mt-2 opacity-50">Escanea para pagar</p>
-              </div>
-
-              <div className="space-y-1">
-                <p><span className="text-luxury-gold">Zelle:</span> payments@wavesvip.com</p>
-                <p><span className="text-luxury-gold">Pago Móvil:</span> 0414-0000000 • CI: 12345678 • Banco Mercantil</p>
               </div>
             </div>
-          </div>
 
-          <div className="space-y-3">
-            <Label className="text-white">Sube tu comprobante</Label>
-            <FileUpload onUpload={(file) => {
-              onFileUpload(file);
-              onSelectMethod(PaymentMethod.MANUAL_UPLOAD);
-            }} />
-            <p className="text-xs text-neutral-500">Formatos permitidos: JPG, PNG, PDF</p>
+            {/* Right Col: Upload */}
+            <div className="space-y-3">
+              <div className="text-center md:text-left">
+                <Label className="text-white">Sube tu comprobante</Label>
+                <p className="text-xs text-neutral-500 mt-1">
+                  Una vez realizado el pago, sube la captura para confirmar tu reserva.
+                </p>
+              </div>
+              <FileUpload onUpload={(file) => {
+                onFileUpload(file);
+                onSelectMethod(PaymentMethod.MANUAL_UPLOAD);
+              }} />
+              <p className="text-[10px] text-neutral-600 text-center md:text-left">
+                Formatos: JPG, PNG, PDF
+              </p>
+            </div>
           </div>
         </div>
       </TabsContent>
     </Tabs>
   );
 }
+
+
+
 

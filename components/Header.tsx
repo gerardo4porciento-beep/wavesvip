@@ -15,7 +15,7 @@ export default function Header() {
       <nav className="container mx-auto px-6 lg:px-12 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Logo width={100} height={32} showText={false} />
+          <Logo width={100} height={32} showText />
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">

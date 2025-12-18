@@ -5,7 +5,6 @@ import { useState } from "react";
 import { CapacitySelector } from "./CapacitySelector";
 import { DateCalendar } from "./DateCalendar";
 import { PaymentGateways } from "./PaymentGateways";
-import { WavesBranding } from "./WavesBranding";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
@@ -90,7 +89,7 @@ export function BookingWizard() {
   };
 
   return (
-    <div className="w-full mx-auto p-1 h-full flex flex-col justify-start pt-2">
+    <div className="w-full mx-auto p-1 flex flex-col justify-start pt-2">
       <div className="bg-black/90 backdrop-blur-md border border-neutral-800 rounded-3xl p-3 md:p-6 shadow-2xl relative overflow-hidden mt-0 w-full">
         {/* Progress Indicator (Integrated) - Compact */}
         <div className="flex justify-between mb-2 relative max-w-md mx-auto scale-75 origin-top">
@@ -175,32 +174,38 @@ export function BookingWizard() {
         )}
 
         {step === 3 && (
-          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <Button variant="ghost" onClick={() => setStep(2)} className="text-neutral-400 hover:text-white pl-0">
-              <ArrowLeft className="w-5 h-5 mr-2" /> Volver
-            </Button>
-
-            <h2 className="text-3xl md:text-4xl text-center font-display text-white mb-8">
-              Método de <span className="text-luxury-gold">Pago</span>
-            </h2>
-
-            <div className="max-w-3xl mx-auto">
-              <PaymentGateways
-                availableMethods={[PaymentMethod.BINANCE, PaymentMethod.PAYPAL, PaymentMethod.UBIPAGOS]}
-                selectedMethod={paymentMethod}
-                onSelectMethod={setPaymentMethod}
-                onFileUpload={setReceiptUrl}
-              />
+          <div className="space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="flex items-center justify-between">
+              <Button variant="ghost" onClick={() => setStep(2)} className="text-neutral-400 hover:text-white pl-0 h-auto py-1">
+                <ArrowLeft className="w-4 h-4 mr-2" /> Volver
+              </Button>
+              <h2 className="text-xl md:text-2xl text-center font-display text-white">
+                Método de <span className="text-luxury-gold">Pago</span>
+              </h2>
+              <div className="w-[80px]"></div> {/* Spacer for center alignment */}
             </div>
 
-            <div className="flex justify-center mt-12">
-              <Button
-                onClick={handlePayment}
-                disabled={loading}
-                className="bg-luxury-gold text-black hover:bg-white hover:text-black font-bold px-12 py-6 text-lg rounded-full min-w-[300px] shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-500"
-              >
-                {loading ? "Procesando Reserva..." : "Confirmar y Pagar"}
-              </Button>
+            <div className="max-w-4xl mx-auto w-full">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-end">
+                <div className="w-full">
+                  <PaymentGateways
+                    availableMethods={[PaymentMethod.BINANCE, PaymentMethod.PAYPAL, PaymentMethod.UBIPAGOS]}
+                    selectedMethod={paymentMethod}
+                    onSelectMethod={setPaymentMethod}
+                    onFileUpload={setReceiptUrl}
+                  />
+                </div>
+
+                <div className="flex justify-end md:justify-start md:pb-6">
+                  <Button
+                    onClick={handlePayment}
+                    disabled={loading}
+                    className="bg-luxury-gold text-black hover:bg-white hover:text-black font-bold px-8 py-4 text-sm rounded-full shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-500 whitespace-nowrap"
+                  >
+                    {loading ? "Procesando..." : "Confirmar"}
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -232,10 +237,11 @@ export function BookingWizard() {
           </div>
         )}
 
-        {/* Branding Footer */}
-        <WavesBranding />
       </div>
     </div>
   );
 }
+
+
+
 
