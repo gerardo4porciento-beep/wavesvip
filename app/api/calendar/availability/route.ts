@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCalendarAvailability } from "@/lib/google-calendar";
 
+export const dynamic = 'force-dynamic';
+
+
 /**
  * GET /api/calendar/availability
  * Retorna la disponibilidad del calendario para un rango de fechas
