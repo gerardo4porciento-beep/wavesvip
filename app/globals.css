@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fuente Versus Semi Bold */
+/* 
 @font-face {
   font-family: 'Versus';
   src: url('/fonts/Versus-SemiBold.woff2') format('woff2'),
@@ -46,7 +46,6 @@
     text-wrap: balance;
   }
 
-  /* Video container optimizations - Full screen incluyendo notch en iPhone */
   .video-container {
     position: absolute;
     top: 0;
@@ -58,7 +57,6 @@
     z-index: 0;
   }
 
-  /* Ocultar scrollbar pero mantener funcionalidad de scroll */
   ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
@@ -72,14 +70,12 @@
     background: transparent;
   }
 
-  /* Para Firefox */
   * {
     scrollbar-width: none;
   }
 
-  /* Para IE y Edge */
   * {
     -ms-overflow-style: none;
   }
 }
-
+*/
