@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-@font-face {
-  font-family: 'Versus';
-  src: url('/fonts/Versus-SemiBold.woff2') format('woff2'),
-       url('/fonts/Versus-SemiBold.woff') format('woff'),
-       url('/fonts/Versus-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   :root {
     --font-versus: "Versus", "Arial Black", "Arial", sans-serif;
@@ -28,17 +17,20 @@
     padding: 0;
     overflow-x: hidden;
   }
-  
-  * {
-    font-family: var(--font-versus);
-  }
 
   html {
     scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
   }
+}
+
+@font-face {
+  font-family: 'Versus';
+  src: url('/fonts/Versus-SemiBold.woff2') format('woff2'),
+    url('/fonts/Versus-SemiBold.woff') format('woff'),
+    url('/fonts/Versus-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
 
 @layer utilities {
@@ -57,25 +49,31 @@
     z-index: 0;
   }
 
-  ::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: transparent;
-  }
-
-  * {
-    scrollbar-width: none;
-  }
-
-  * {
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
     -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  /* Custom scrollbar utility */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
   }
 }
-*/
