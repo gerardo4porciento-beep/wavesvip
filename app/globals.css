@@ -21,7 +21,6 @@
     --font-meta-headline: "FF Meta Headline Compressed Bold", "FF Meta Headline", "Meta", Arial, sans-serif;
   }
 
-
   body {
     @apply bg-luxury-dark text-luxury-light antialiased;
     font-family: var(--font-versus);
