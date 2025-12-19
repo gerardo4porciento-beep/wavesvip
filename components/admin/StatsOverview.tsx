@@ -209,7 +209,7 @@ export function StatsOverview({ stats }: { stats: any }) {
                                                     <div>
                                                         <p className="text-neutral-500 text-[10px] uppercase tracking-wider mb-0.5">Notas</p>
                                                         <p className="text-neutral-300 bg-white/5 p-2 rounded border border-white/5 italic">
-                                                            "{notes}"
+                                                            &quot;{notes}&quot;
                                                         </p>
                                                     </div>
                                                 </div>
