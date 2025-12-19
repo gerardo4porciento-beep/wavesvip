@@ -6,7 +6,7 @@ import { Pencil, Trash2, Calendar, User, DollarSign, Users } from "lucide-react"
 import { deleteBooking } from "./actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
+
 
 type BookingItem = {
     id: string;
