@@ -30,7 +30,14 @@ export function StatsOverview({ stats }: { stats: any }) {
     // upcomingBookings now contains ALL bookings history due to previous actions.ts update
     const allBookings: BookingItem[] = stats?.upcomingBookings || [];
 
-    const handleDelete = async (id: string) => {
+    const [expandedId, setExpandedId] = useState<string | null>(null);
+
+    const toggleExpand = (id: string) => {
+        setExpandedId(expandedId === id ? null : id);
+    };
+
+    const handleDelete = async (id: string, e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent toggling when clicking delete
         if (!confirm("¿Estás seguro de eliminar esta reserva? Esta acción no se puede deshacer.")) {
             return;
         }
@@ -44,7 +51,8 @@ export function StatsOverview({ stats }: { stats: any }) {
         }
     };
 
-    const handleEdit = (item: BookingItem) => {
+    const handleEdit = (item: BookingItem, e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent toggling when clicking edit
         alert("Función de editar próximamente.");
         // TODO: Implement updateBooking form/modal
     };
