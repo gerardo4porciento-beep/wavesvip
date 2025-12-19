@@ -81,7 +81,7 @@ export default function HeroVideo({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentSource, setCurrentSource] = useState<string | null>(null);
   const [videoKey, setVideoKey] = useState(0); // Key para forzar recarga del video
-  
+
   // Typewriter effect para la barra de búsqueda
   const [typewriterText, setTypewriterText] = useState("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
@@ -106,7 +106,7 @@ export default function HeroVideo({
       const mp4Supported = video.canPlayType('video/mp4; codecs="avc1.42E01E"') !== "";
 
       let sourceUrl = videoUrl;
-      
+
       if (webmSupported && videoUrl.includes(".webm")) {
         sourceUrl = videoUrl.replace(".mp4", ".webm");
       } else if (mp4Supported) {
@@ -174,7 +174,7 @@ export default function HeroVideo({
     video.loop = true;
     video.setAttribute("webkit-playsinline", "true");
     video.setAttribute("playsinline", "true");
-    
+
     // Detectar iOS y forzar muted
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     if (isIOS) {
@@ -299,7 +299,7 @@ export default function HeroVideo({
   }
 
   return (
-    <div 
+    <div
       className={cn("relative w-full bg-black", className)}
       style={{
         height: '100dvh',
@@ -317,7 +317,7 @@ export default function HeroVideo({
       <video
         key={videoKey}
         ref={videoRef}
-        className="video-container"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
         poster={posterUrl}
         playsInline
         webkit-playsinline="true"
@@ -379,7 +379,7 @@ export default function HeroVideo({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex flex-col items-center justify-center gap-0"
-            style={{ 
+            style={{
               fontFamily: 'var(--font-meta-headline), "FF Meta Headline Compressed Bold", "FF Meta Headline", "Meta", Arial, sans-serif',
               letterSpacing: '-0.02em',
               fontWeight: 700,
@@ -426,7 +426,7 @@ export default function HeroVideo({
                 </span>
               </div>
             </div>
-            <Button 
+            <Button
               className="hidden md:flex bg-luxury-gold text-luxury-dark border-2 border-luxury-gold hover:bg-luxury-gold/90 uppercase font-bold px-8 py-3 text-base rounded-full transition-colors duration-300"
               onClick={(e) => {
                 e.stopPropagation();
@@ -443,81 +443,81 @@ export default function HeroVideo({
       <AnimatePresence>
         {isSearchMenuOpen && (
           <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
-          onClick={() => setIsSearchMenuOpen(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-luxury-gold w-full max-w-5xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
+            onClick={() => setIsSearchMenuOpen(false)}
           >
-            {/* Header del menú */}
-            <div className="flex items-center justify-between p-6 border-b-2 border-luxury-dark/20">
-              <h2 className="text-2xl font-bold text-luxury-dark uppercase">Search</h2>
-              <button
-                onClick={() => setIsSearchMenuOpen(false)}
-                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-luxury-dark/10 transition-colors"
-              >
-                <X className="w-6 h-6 text-luxury-dark" />
-              </button>
-            </div>
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-luxury-gold w-full max-w-5xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col"
+            >
+              {/* Header del menú */}
+              <div className="flex items-center justify-between p-6 border-b-2 border-luxury-dark/20">
+                <h2 className="text-2xl font-bold text-luxury-dark uppercase">Search</h2>
+                <button
+                  onClick={() => setIsSearchMenuOpen(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-luxury-dark/10 transition-colors"
+                >
+                  <X className="w-6 h-6 text-luxury-dark" />
+                </button>
+              </div>
 
-            {/* Contenido del menú - Destinos en cuadrícula */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <h3 className="text-xl font-bold text-luxury-dark uppercase mb-6 text-center">Destinos</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                {destinations.map((destination, index) => (
-                  <motion.div
-                    key={destination.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-300 group"
-                    onClick={() => {
-                      setIsSearchMenuOpen(false);
-                      // Scroll a la sección de destinos
-                      const destinosSection = document.getElementById('destinos');
-                      if (destinosSection) {
-                        destinosSection.scrollIntoView({ behavior: 'smooth' });
-                      }
-                    }}
-                  >
-                    {/* Imagen */}
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img
-                        src={destination.image}
-                        alt={destination.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <h4 className="text-sm md:text-base font-bold text-white mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                          {destination.name}
-                        </h4>
-                        {/* Features destacados */}
-                        <div className="flex flex-wrap gap-1">
-                          {destination.features.slice(0, 2).map((feature, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-0.5 text-[10px] font-bold text-white bg-black/70 backdrop-blur-md rounded-full border border-white/30"
-                            >
-                              {feature}
-                            </span>
-                          ))}
+              {/* Contenido del menú - Destinos en cuadrícula */}
+              <div className="flex-1 overflow-y-auto p-6">
+                <h3 className="text-xl font-bold text-luxury-dark uppercase mb-6 text-center">Destinos</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                  {destinations.map((destination, index) => (
+                    <motion.div
+                      key={destination.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: index * 0.05 }}
+                      className="bg-white rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-300 group"
+                      onClick={() => {
+                        setIsSearchMenuOpen(false);
+                        // Scroll a la sección de destinos
+                        const destinosSection = document.getElementById('destinos');
+                        if (destinosSection) {
+                          destinosSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                    >
+                      {/* Imagen */}
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <img
+                          src={destination.image}
+                          alt={destination.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <h4 className="text-sm md:text-base font-bold text-white mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                            {destination.name}
+                          </h4>
+                          {/* Features destacados */}
+                          <div className="flex flex-wrap gap-1">
+                            {destination.features.slice(0, 2).map((feature, i) => (
+                              <span
+                                key={i}
+                                className="px-2 py-0.5 text-[10px] font-bold text-white bg-black/70 backdrop-blur-md rounded-full border border-white/30"
+                              >
+                                {feature}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
         )}
       </AnimatePresence>
 
