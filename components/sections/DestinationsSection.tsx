@@ -66,7 +66,7 @@ export default function DestinationsSection() {
   return (
     <section
       id="destinos"
-      className="pt-32 pb-24 px-4 bg-[#E0F7E0] text-luxury-light"
+      className="pt-40 pb-24 px-4 bg-[#E0F7E0] text-luxury-light"
     >
       <div className="container mx-auto max-w-7xl">
         <motion.div

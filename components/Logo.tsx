@@ -28,7 +28,7 @@ export default function Logo({
         priority
       />
       {showText && (
-        <span className="text-luxury-gold font-bold text-2xl tracking-tight" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+        <span className="text-luxury-gold font-bold text-2xl tracking-tight hidden lg:block" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
           WAVES VIP
         </span>
       )}
