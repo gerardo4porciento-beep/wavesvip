@@ -29,7 +29,7 @@ export async function getAdminStats() {
 
         snapshot.forEach(doc => {
             const data = doc.data();
-            const bookingDate = new Date(data.date || data.startDate); // Handle different field names if necessary
+            const bookingDate = new Date(data.date || data.startDate);
 
             // Total Revenue
             const price = parseFloat(data.totalAmount || data.totalPrice || 0);
@@ -114,3 +114,18 @@ export async function createManualBooking(formData: any) {
     }
 }
 
+export async function deleteBooking(bookingId: string) {
+    try {
+        if (!db) {
+            throw new Error("Firebase no está inicializado.");
+        }
+
+        await db.collection('bookings').doc(bookingId).delete();
+
+        revalidatePath('/admin/dashboard');
+        return { success: true };
+    } catch (error: any) {
+        console.error("Error deleting booking:", error);
+        return { success: false, error: error.message };
+    }
+}

@@ -2,6 +2,10 @@
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { Pencil, Trash2 } from "lucide-react";
+import { deleteBooking } from "./actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type PendingItem = {
     id: string;
@@ -18,6 +22,7 @@ type PendingItem = {
 };
 
 export function StatsOverview({ stats }: { stats: any }) {
+    const router = useRouter();
     // Simplify to just use props. No more mock overrides.
     const totalRevenue = stats?.totalRevenue ?? 0;
     const totalCollected = stats?.totalCollected ?? 0;
@@ -25,16 +30,23 @@ export function StatsOverview({ stats }: { stats: any }) {
     const pendingBookings: PendingItem[] = stats?.pendingBookings || [];
     const upcomingBookings = stats?.upcomingBookings || [];
 
-    // Placeholder handlers until we implement real server actions for Edit/Delete
-    const handleDeletePending = (item: PendingItem) => {
-        if (confirm("Función de eliminar en desarrollo (requiere backend real).")) {
-            // TODO: Implement deleteBooking server action
+    const handleDelete = async (id: string) => {
+        if (!confirm("¿Estás seguro de eliminar esta reserva? Esta acción no se puede deshacer.")) {
+            return;
+        }
+
+        const result = await deleteBooking(id);
+        if (result.success) {
+            toast.success("Reserva eliminada correctamente");
+            router.refresh(); // Important to refresh the list
+        } else {
+            toast.error("Error al eliminar: " + result.error);
         }
     };
 
-    const handleEditPending = (item: PendingItem) => {
-        alert("Función de editar en desarrollo (requiere backend real).");
-        // TODO: Implement updateBooking server action
+    const handleEdit = (item: PendingItem) => {
+        alert("Función de editar próximamente.");
+        // TODO: Implement updateBooking form/modal
     };
 
     return (
@@ -106,18 +118,20 @@ export function StatsOverview({ stats }: { stats: any }) {
                                         <div className="text-right">
                                             <p className="text-neutral-400 text-xs">Total</p>
                                             <p className="text-white font-mono text-sm">${Number(total || 0).toFixed(2)}</p>
-                                            <div className="flex gap-1 justify-end mt-1">
+                                            <div className="flex gap-1 justify-end mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button
-                                                    onClick={() => handleEditPending(booking)}
-                                                    className="px-1.5 py-0.5 text-[10px] text-neutral-200 border border-neutral-600/60 rounded hover:bg-neutral-700/60 transition"
+                                                    onClick={() => handleEdit(booking)}
+                                                    className="p-1 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded transition"
+                                                    title="Editar"
                                                 >
-                                                    Edit
+                                                    <Pencil className="w-3.5 h-3.5" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDeletePending(booking)}
-                                                    className="px-1.5 py-0.5 text-[10px] text-red-200 border border-red-700/70 rounded hover:bg-red-800/60 transition"
+                                                    onClick={() => handleDelete(booking.id)}
+                                                    className="p-1 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded transition"
+                                                    title="Eliminar"
                                                 >
-                                                    Del
+                                                    <Trash2 className="w-3.5 h-3.5" />
                                                 </button>
                                             </div>
                                         </div>
@@ -160,9 +174,27 @@ export function StatsOverview({ stats }: { stats: any }) {
                                         </p>
                                         <p className="text-white text-sm">{booking.customer_name || booking.name}</p>
                                     </div>
-                                    <div className="text-right">
-                                        {booking.capacity && <p className="text-neutral-400 text-xs">{booking.capacity} Pax</p>}
-                                        <p className="text-white font-mono text-sm">${Number(booking.total_price || booking.totalAmount || 0).toFixed(2)}</p>
+                                    <div className="flex items-center gap-3">
+                                        <div className="text-right">
+                                            {booking.capacity && <p className="text-neutral-400 text-xs">{booking.capacity} Pax</p>}
+                                            <p className="text-white font-mono text-sm">${Number(booking.total_price || booking.totalAmount || 0).toFixed(2)}</p>
+                                        </div>
+                                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button
+                                                onClick={() => handleEdit(booking)}
+                                                className="p-1 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded transition"
+                                                title="Editar"
+                                            >
+                                                <Pencil className="w-4 h-4" />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(booking.id)}
+                                                className="p-1 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded transition"
+                                                title="Eliminar"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )
