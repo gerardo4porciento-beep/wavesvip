@@ -17,8 +17,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-versus)", "Arial Black", "Arial", "sans-serif"],
-        display: ["var(--font-versus)", "Arial Black", "Arial", "sans-serif"],
+        sans: ['"Franklin Gothic Extra Condensed"', '"Franklin Gothic Medium Cond"', "Arial Narrow", "Arial", "sans-serif"],
+        display: ['"Franklin Gothic Extra Condensed"', '"Franklin Gothic Medium Cond"', "Arial Narrow", "Arial", "sans-serif"],
+        serif: ["var(--font-playfair)", "serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-in-out",
