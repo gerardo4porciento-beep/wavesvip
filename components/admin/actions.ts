@@ -36,7 +36,8 @@ export async function getAdminStats() {
             totalRevenue += price;
 
             // Status checks
-            const isConfirmed = data.status === 'CONFIRMED';
+            // Consider a booking "active"/upcoming if it is CONFIRMED or PENDING_PAYMENT
+            const isConfirmed = data.status === 'CONFIRMED' || data.status === 'PENDING_PAYMENT';
             const isPendingPayment = data.status === 'PENDING_PAYMENT' || data.remainingAmount > 0;
 
             if (isConfirmed) {
