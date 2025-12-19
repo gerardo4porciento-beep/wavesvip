@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Force cache invalidation - 2025-12-19
+  generateBuildId: async () => {
+    return 'build-' + Date.now()
+  },
   images: {
     remotePatterns: [
       {
