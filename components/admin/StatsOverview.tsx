@@ -2,12 +2,13 @@
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Calendar, User, DollarSign, Users } from "lucide-react";
 import { deleteBooking } from "./actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 
-type PendingItem = {
+type BookingItem = {
     id: string;
     start_date?: string;
     customer_name?: string;
@@ -17,18 +18,16 @@ type PendingItem = {
     date?: string; // fallback
     name?: string; // fallback
     notes?: string;
-    // Add other potential fields to avoid TS errors if props come with extra data
     [key: string]: any;
 };
 
 export function StatsOverview({ stats }: { stats: any }) {
     const router = useRouter();
-    // Simplify to just use props. No more mock overrides.
     const totalRevenue = stats?.totalRevenue ?? 0;
     const totalCollected = stats?.totalCollected ?? 0;
     const totalPending = stats?.totalPending ?? 0;
-    const pendingBookings: PendingItem[] = stats?.pendingBookings || [];
-    const upcomingBookings = stats?.upcomingBookings || [];
+    // upcomingBookings now contains ALL bookings history due to previous actions.ts update
+    const allBookings: BookingItem[] = stats?.upcomingBookings || [];
 
     const handleDelete = async (id: string) => {
         if (!confirm("¿Estás seguro de eliminar esta reserva? Esta acción no se puede deshacer.")) {
@@ -38,167 +37,144 @@ export function StatsOverview({ stats }: { stats: any }) {
         const result = await deleteBooking(id);
         if (result.success) {
             toast.success("Reserva eliminada correctamente");
-            router.refresh(); // Important to refresh the list
+            router.refresh();
         } else {
             toast.error("Error al eliminar: " + result.error);
         }
     };
 
-    const handleEdit = (item: PendingItem) => {
+    const handleEdit = (item: BookingItem) => {
         alert("Función de editar próximamente.");
         // TODO: Implement updateBooking form/modal
     };
 
     return (
-        <div className="space-y-3 h-full">
-            {/* Revenue Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                {/* Total Facturado */}
-                <div className="bg-neutral-900/90 backdrop-blur-sm border border-neutral-800 p-3 rounded-2xl relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-luxury-gold/5 group-hover:bg-luxury-gold/10 transition-all" />
-                    <h3 className="text-neutral-400 font-medium text-xs mb-0.5 relative z-10">Total Facturado</h3>
-                    <p className="text-2xl font-display font-bold text-white relative z-10">
-                        ${totalRevenue.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        <div className="space-y-4 h-full flex flex-col">
+            {/* KPI Cards - Compact Row */}
+            <div className="grid grid-cols-3 gap-2 shrink-0">
+                <div className="bg-neutral-900/80 backdrop-blur-md border border-white/5 p-3 rounded-xl overflow-hidden relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-luxury-gold/5 to-transparent group-hover:from-luxury-gold/10 transition-all" />
+                    <p className="text-neutral-400 text-[10px] font-medium uppercase tracking-wider relative z-10">Total Facturado</p>
+                    <p className="text-xl font-display font-bold text-white mt-1 relative z-10">
+                        ${totalRevenue.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </p>
                 </div>
 
-                {/* Cobrado */}
-                <div className="bg-green-950/90 backdrop-blur-sm border border-green-800/50 p-3 rounded-2xl relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-green-500/5 group-hover:bg-green-500/10 transition-all" />
-                    <h3 className="text-green-400 font-medium text-xs mb-0.5 relative z-10">Cobrado</h3>
-                    <p className="text-2xl font-display font-bold text-white relative z-10">
-                        ${totalCollected.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                <div className="bg-neutral-900/80 backdrop-blur-md border border-white/5 p-3 rounded-xl overflow-hidden relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent group-hover:from-green-500/10 transition-all" />
+                    <p className="text-green-400/80 text-[10px] font-medium uppercase tracking-wider relative z-10">Cobrado</p>
+                    <p className="text-xl font-display font-bold text-white mt-1 relative z-10">
+                        ${totalCollected.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </p>
                 </div>
 
-                {/* Por Cobrar */}
-                <div className="bg-orange-950/90 backdrop-blur-sm border border-orange-800/50 p-3 rounded-2xl relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-orange-500/5 group-hover:bg-orange-500/10 transition-all" />
-                    <h3 className="text-orange-400 font-medium text-xs mb-0.5 relative z-10">Por Cobrar</h3>
-                    <p className="text-2xl font-display font-bold text-white relative z-10">
-                        ${totalPending.toLocaleString("en-US", { minimumFractionDigits: 2 })}
+                <div className="bg-neutral-900/80 backdrop-blur-md border border-white/5 p-3 rounded-xl overflow-hidden relative group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent group-hover:from-orange-500/10 transition-all" />
+                    <p className="text-orange-400/80 text-[10px] font-medium uppercase tracking-wider relative z-10">Por Cobrar</p>
+                    <p className="text-xl font-display font-bold text-white mt-1 relative z-10">
+                        ${totalPending.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </p>
                 </div>
             </div>
 
-            {/* Pending Bookings with Remaining Amount */}
-            {pendingBookings && pendingBookings.length > 0 && (
-                <div className="bg-orange-950/90 backdrop-blur-sm border border-orange-800/50 p-3 rounded-2xl">
-                    <h3 className="text-sm font-display text-white mb-2 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-                        Pendientes por Cobrar
+            {/* Unified Booking List */}
+            <div className="flex-1 bg-neutral-900/80 backdrop-blur-md border border-white/5 rounded-xl overflow-hidden flex flex-col min-h-0">
+                <div className="p-3 border-b border-white/5 flex items-center justify-between shrink-0 bg-neutral-900/90">
+                    <h3 className="text-sm font-display text-white flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-luxury-gold animate-pulse" />
+                        Gestión de Reservas
                     </h3>
-                    <div className="space-y-1.5">
-                        {pendingBookings.map((booking: any) => {
-                            const remaining = booking.remainingAmount ?? 0;
-                            const total = booking.total_price ?? booking.totalAmount ?? 0;
+                    <span className="text-[10px] text-neutral-500 bg-neutral-800 px-2 py-0.5 rounded-full">
+                        {allBookings.length} Registros
+                    </span>
+                </div>
 
-                            // Date handling
-                            let displayDate = "Fecha inválida";
-                            try {
-                                const d = booking.date || booking.start_date || booking.createdAt;
-                                if (d) {
-                                    displayDate = format(new Date(d), "dd MMM, yyyy", { locale: es });
-                                }
-                            } catch (e) { }
+                <div className="overflow-y-auto p-1 custom-scrollbar flex-1">
+                    {allBookings.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center h-full text-neutral-500 text-xs py-10">
+                            <Calendar className="w-8 h-8 mb-2 opacity-20" />
+                            <p>No hay reservas registradas</p>
+                        </div>
+                    ) : (
+                        <div className="space-y-1">
+                            {allBookings.map((booking: any) => {
+                                const total = Number(booking.total_price || booking.totalAmount || 0);
+                                const remaining = Number(booking.remainingAmount || 0);
+                                const isPending = remaining > 0;
+                                const isPaid = !isPending;
 
-                            const name = booking.customer_name || booking.name || "Cliente";
-                            const capacity = booking.capacity || booking.pax || "";
+                                let displayDate = "Fecha inválida";
+                                try {
+                                    const d = booking.date || booking.start_date || booking.createdAt;
+                                    if (d) displayDate = format(new Date(d), "dd MMM, yyyy", { locale: es });
+                                } catch { }
 
-                            return (
-                                <div key={booking.id} className="bg-neutral-800/90 backdrop-blur-sm border border-orange-800/50 p-2 rounded-lg group hover:border-orange-500/50 transition-colors">
-                                    <div className="flex justify-between items-start mb-1.5">
-                                        <div>
-                                            <p className="text-orange-400 font-bold">
-                                                {displayDate}
-                                            </p>
-                                            <p className="text-white text-sm">{name}</p>
-                                            <p className="text-neutral-400 text-xs">{capacity ? `${capacity} Pax` : ""}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-neutral-400 text-xs">Total</p>
-                                            <p className="text-white font-mono text-sm">${Number(total || 0).toFixed(2)}</p>
-                                            <div className="flex gap-1 justify-end mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button
-                                                    onClick={() => handleEdit(booking)}
-                                                    className="p-1 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded transition"
-                                                    title="Editar"
-                                                >
-                                                    <Pencil className="w-3.5 h-3.5" />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDelete(booking.id)}
-                                                    className="p-1 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded transition"
-                                                    title="Eliminar"
-                                                >
-                                                    <Trash2 className="w-3.5 h-3.5" />
-                                                </button>
+                                const name = booking.customer_name || booking.name || "Cliente";
+                                const pax = booking.capacity || booking.pax || 0;
+
+                                return (
+                                    <div
+                                        key={booking.id}
+                                        className="group flex items-center justify-between p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/5 transition-all text-xs"
+                                    >
+                                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                                            {/* Date */}
+                                            <div className="w-20 shrink-0">
+                                                <p className="text-luxury-gold font-bold truncate">{displayDate}</p>
+                                            </div>
+
+                                            {/* Client Info */}
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2">
+                                                    <p className="text-white font-medium truncate">{name}</p>
+                                                    {pax > 0 && (
+                                                        <span className="flex items-center gap-0.5 text-neutral-500 bg-black/20 px-1.5 rounded text-[10px]">
+                                                            <Users className="w-3 h-3" /> {pax}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Status Badge */}
+                                            <div className="w-28 shrink-0 text-right">
+                                                {isPaid ? (
+                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">
+                                                        Pagado
+                                                    </span>
+                                                ) : (
+                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20 animate-pulse">
+                                                        Debe ${remaining}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            {/* Amount */}
+                                            <div className="w-20 shrink-0 text-right">
+                                                <p className="text-white font-mono">${total}</p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="pt-1.5 border-t border-orange-800/30">
-                                        <p className="text-orange-300 font-bold text-base">
-                                            Por Cobrar: ${Number(remaining || 0).toFixed(2)}
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            )}
 
-            {/* Notifications / Upcoming Dates */}
-            <div className="bg-neutral-900/90 backdrop-blur-sm border border-neutral-800 p-3 rounded-2xl flex-1 min-h-[250px]">
-                <h3 className="text-sm font-display text-white mb-2 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-luxury-gold animate-pulse" />
-                    Próximas Reservas Confirmadas
-                </h3>
-
-                <div className="space-y-1.5">
-                    {upcomingBookings.length === 0 ? (
-                        <p className="text-neutral-500 italic text-xs">No hay reservas próximas.</p>
-                    ) : (
-                        upcomingBookings.map((booking: any) => {
-                            let displayDate = "";
-                            try {
-                                const d = booking.date || booking.start_date || booking.createdAt;
-                                if (d) displayDate = format(new Date(d), "dd MMM, yyyy", { locale: es });
-                            } catch { }
-
-                            return (
-                                <div key={booking.id} className="bg-neutral-800/90 backdrop-blur-sm border border-neutral-800 p-1.5 rounded-lg flex justify-between items-center group hover:border-luxury-gold/50 transition-colors">
-                                    <div>
-                                        <p className="text-luxury-gold font-bold">
-                                            {displayDate}
-                                        </p>
-                                        <p className="text-white text-sm">{booking.customer_name || booking.name}</p>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="text-right">
-                                            {booking.capacity && <p className="text-neutral-400 text-xs">{booking.capacity} Pax</p>}
-                                            <p className="text-white font-mono text-sm">${Number(booking.total_price || booking.totalAmount || 0).toFixed(2)}</p>
-                                        </div>
-                                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        {/* Actions */}
+                                        <div className="flex items-center gap-1 ml-3 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button
                                                 onClick={() => handleEdit(booking)}
-                                                className="p-1 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded transition"
+                                                className="p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded-md transition"
                                                 title="Editar"
                                             >
-                                                <Pencil className="w-4 h-4" />
+                                                <Pencil className="w-3.5 h-3.5" />
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(booking.id)}
-                                                className="p-1 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded transition"
+                                                className="p-1.5 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded-md transition"
                                                 title="Eliminar"
                                             >
-                                                <Trash2 className="w-4 h-4" />
+                                                <Trash2 className="w-3.5 h-3.5" />
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        })
+                                );
+                            })}
+                        </div>
                     )}
                 </div>
             </div>
