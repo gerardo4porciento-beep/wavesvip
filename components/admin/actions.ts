@@ -36,28 +36,36 @@ export async function getAdminStats() {
             totalRevenue += price;
 
             // Status checks
-            // Consider a booking "active"/upcoming if it is CONFIRMED or PENDING_PAYMENT
+            // Consider a booking "active" if it is CONFIRMED or PENDING_PAYMENT
             const isConfirmed = data.status === 'CONFIRMED' || data.status === 'PENDING_PAYMENT';
             const isPendingPayment = data.status === 'PENDING_PAYMENT' || data.remainingAmount > 0;
 
-            if (isConfirmed) {
-                totalCollected += price;
+            // Calculate pending amount for this specific booking
+            let currentPending = 0;
+            if (isPendingPayment) {
+                currentPending = parseFloat(data.remainingAmount || 0) || extractRemainingAmount(data.notes);
+                totalPending += currentPending;
 
-                // Upcoming
-                if (bookingDate >= today) {
-                    upcomingBookings.push({ id: doc.id, ...data });
+                // Add to pending list specific logic if needed, but for now we just track stats
+                if (bookingDate >= today) { // Keep pending list focused on future? Or show all? Let's show all pending too if needed, but usually pending IS future. 
+                    // Actually, let's just keep the pendingBookings list as is (future pending), 
+                    // BUT for the main list (upcomingBookings), we want to show EVERYTHING so the user can delete old tests.
                 }
-            }
 
-            if (isPendingPayment && bookingDate >= today) {
-                const remaining = parseFloat(data.remainingAmount || 0) || extractRemainingAmount(data.notes);
-                totalPending += remaining;
-
+                // Add to pending list (keep date filter or remove? Let's remove it to find all debts)
                 pendingBookings.push({
                     id: doc.id,
                     ...data,
-                    remainingAmount: remaining
+                    remainingAmount: currentPending
                 });
+            }
+
+            if (isConfirmed) {
+                // collected is revenue minus what is pending for this booking
+                totalCollected += (price - currentPending);
+
+                // Add to main list - REMOVED DATE FILTER to show all history
+                upcomingBookings.push({ id: doc.id, ...data });
             }
         });
 
