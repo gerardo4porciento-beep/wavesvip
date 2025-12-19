@@ -111,6 +111,7 @@ export function StatsOverview({ stats }: { stats: any }) {
                                 const remaining = Number(booking.remainingAmount || 0);
                                 const isPending = remaining > 0;
                                 const isPaid = !isPending;
+                                const isExpanded = expandedId === booking.id;
 
                                 let displayDate = "Fecha inválida";
                                 try {
@@ -120,66 +121,100 @@ export function StatsOverview({ stats }: { stats: any }) {
 
                                 const name = booking.customer_name || booking.name || "Cliente";
                                 const pax = booking.capacity || booking.pax || 0;
+                                const contact = booking.contact || booking.telegram || booking.email || "No registrado";
+                                const notes = booking.notes || "Sin notas adicionales";
 
                                 return (
-                                    <div
-                                        key={booking.id}
-                                        className="group flex items-center justify-between p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/5 transition-all text-xs"
-                                    >
-                                        <div className="flex items-center gap-4 flex-1 min-w-0">
-                                            {/* Date */}
-                                            <div className="w-20 shrink-0">
-                                                <p className="text-luxury-gold font-bold truncate">{displayDate}</p>
-                                            </div>
+                                    <div key={booking.id} className="bg-white/5 rounded-lg border border-transparent hover:border-white/5 transition-all overflow-hidden">
+                                        {/* Main Row */}
+                                        <div
+                                            onClick={() => toggleExpand(booking.id)}
+                                            className="group flex items-center justify-between p-2 cursor-pointer hover:bg-white/5 transition-colors text-xs"
+                                        >
+                                            <div className="flex items-center gap-4 flex-1 min-w-0">
+                                                {/* Chevron */}
+                                                <div className="text-neutral-500 group-hover:text-white transition-colors">
+                                                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                                                </div>
 
-                                            {/* Client Info */}
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-center gap-2">
-                                                    <p className="text-white font-medium truncate">{name}</p>
-                                                    {pax > 0 && (
-                                                        <span className="flex items-center gap-0.5 text-neutral-500 bg-black/20 px-1.5 rounded text-[10px]">
-                                                            <Users className="w-3 h-3" /> {pax}
+                                                {/* Date */}
+                                                <div className="w-20 shrink-0">
+                                                    <p className="text-luxury-gold font-bold truncate">{displayDate}</p>
+                                                </div>
+
+                                                {/* Client Info */}
+                                                <div className="flex-1 min-w-0">
+                                                    <div className="flex items-center gap-2">
+                                                        <p className="text-white font-medium truncate">{name}</p>
+                                                        {pax > 0 && (
+                                                            <span className="flex items-center gap-0.5 text-neutral-500 bg-black/20 px-1.5 rounded text-[10px]">
+                                                                <Users className="w-3 h-3" /> {pax}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Status Badge */}
+                                                <div className="w-28 shrink-0 text-right">
+                                                    {isPaid ? (
+                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">
+                                                            Pagado
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20 animate-pulse">
+                                                            Debe ${remaining}
                                                         </span>
                                                     )}
                                                 </div>
+
+                                                {/* Amount */}
+                                                <div className="w-20 shrink-0 text-right">
+                                                    <p className="text-white font-mono">${total}</p>
+                                                </div>
                                             </div>
 
-                                            {/* Status Badge */}
-                                            <div className="w-28 shrink-0 text-right">
-                                                {isPaid ? (
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">
-                                                        Pagado
-                                                    </span>
-                                                ) : (
-                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20 animate-pulse">
-                                                        Debe ${remaining}
-                                                    </span>
-                                                )}
-                                            </div>
-
-                                            {/* Amount */}
-                                            <div className="w-20 shrink-0 text-right">
-                                                <p className="text-white font-mono">${total}</p>
+                                            {/* Actions */}
+                                            <div className="flex items-center gap-1 ml-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button
+                                                    onClick={(e) => handleEdit(booking, e)}
+                                                    className="p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded-md transition"
+                                                    title="Editar"
+                                                >
+                                                    <Pencil className="w-3.5 h-3.5" />
+                                                </button>
+                                                <button
+                                                    onClick={(e) => handleDelete(booking.id, e)}
+                                                    className="p-1.5 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded-md transition"
+                                                    title="Eliminar"
+                                                >
+                                                    <Trash2 className="w-3.5 h-3.5" />
+                                                </button>
                                             </div>
                                         </div>
 
-                                        {/* Actions */}
-                                        <div className="flex items-center gap-1 ml-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button
-                                                onClick={() => handleEdit(booking)}
-                                                className="p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-700 rounded-md transition"
-                                                title="Editar"
-                                            >
-                                                <Pencil className="w-3.5 h-3.5" />
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(booking.id)}
-                                                className="p-1.5 text-red-400 hover:text-red-200 hover:bg-red-900/40 rounded-md transition"
-                                                title="Eliminar"
-                                            >
-                                                <Trash2 className="w-3.5 h-3.5" />
-                                            </button>
-                                        </div>
+                                        {/* Expanded Details */}
+                                        {isExpanded && (
+                                            <div className="bg-black/20 border-t border-white/5 p-3 text-xs grid grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-200">
+                                                <div className="space-y-2">
+                                                    <div>
+                                                        <p className="text-neutral-500 text-[10px] uppercase tracking-wider mb-0.5">Contacto</p>
+                                                        <p className="text-neutral-300 font-mono select-all">{contact}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-neutral-500 text-[10px] uppercase tracking-wider mb-0.5">ID Reserva</p>
+                                                        <p className="text-neutral-500 font-mono text-[10px] select-all">{booking.id}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <div>
+                                                        <p className="text-neutral-500 text-[10px] uppercase tracking-wider mb-0.5">Notas</p>
+                                                        <p className="text-neutral-300 bg-white/5 p-2 rounded border border-white/5 italic">
+                                                            "{notes}"
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
