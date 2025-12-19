@@ -2,10 +2,11 @@
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Pencil, Trash2, Calendar, User, DollarSign, Users } from "lucide-react";
+import { Pencil, Trash2, Calendar, User, DollarSign, Users, ChevronDown, ChevronUp } from "lucide-react";
 import { deleteBooking } from "./actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
 type BookingItem = {
