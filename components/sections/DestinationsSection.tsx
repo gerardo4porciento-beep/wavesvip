@@ -76,7 +76,7 @@ export default function DestinationsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-luxury-gold">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-luxury-light">
             Destinos
           </h2>
           <p className="text-xl text-luxury-light/90 max-w-3xl mx-auto">
