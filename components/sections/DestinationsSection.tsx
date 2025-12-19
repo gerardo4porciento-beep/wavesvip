@@ -66,7 +66,7 @@ export default function DestinationsSection() {
   return (
     <section
       id="destinos"
-      className="pt-8 pb-24 px-4 bg-[#E0F7E0] text-luxury-light"
+      className="pt-32 pb-24 px-4 bg-[#E0F7E0] text-luxury-light"
     >
       <div className="container mx-auto max-w-7xl">
         <motion.div
@@ -76,7 +76,7 @@ export default function DestinationsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-luxury-gold">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-luxury-light">
             Destinos
           </h2>
           <p className="text-xl text-luxury-light/90 max-w-3xl mx-auto">
